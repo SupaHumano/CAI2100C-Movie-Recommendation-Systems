@@ -1,0 +1,202 @@
+{
+  "fictional": true,
+  "cohorts": [
+    "Women 18-29",
+    "Women 30-44",
+    "Women 45+",
+    "Men 18-29",
+    "Men 30-44",
+    "Men 45+"
+  ],
+  "movies": [
+    {
+      "id": 0,
+      "title": "Solstice",
+      "year": 2017,
+      "genre": [
+        "Science Fiction",
+        "Adventure"
+      ],
+      "plot": "A strange light changes a remote valley.",
+      "director": "J. Moreno",
+      "poster": "solstice.svg",
+      "ages": [
+        6.2,
+        6.4,
+        6.6,
+        6.8,
+        7,
+        7.2
+      ],
+      "color": "#ed668d"
+    },
+    {
+      "id": 1,
+      "title": "Velvet City",
+      "year": 2018,
+      "genre": [
+        "Thriller",
+        "Mystery"
+      ],
+      "plot": "A city detective follows traces of a forgotten story.",
+      "director": "A. Stone",
+      "poster": "velvet.svg",
+      "ages": [
+        6.5,
+        6.7,
+        6.9,
+        7.1,
+        7.3,
+        7.5
+      ],
+      "color": "#7a9dda"
+    },
+    {
+      "id": 2,
+      "title": "Deep Blue",
+      "year": 2019,
+      "genre": [
+        "Adventure",
+        "Mystery"
+      ],
+      "plot": "An explorer hears a mysterious signal beneath the ocean.",
+      "director": "S. Rivera",
+      "poster": "deepblue.svg",
+      "ages": [
+        6.8,
+        7,
+        7.2,
+        7.4,
+        7.6,
+        7.8
+      ],
+      "color": "#53bcce"
+    },
+    {
+      "id": 3,
+      "title": "Afterglow",
+      "year": 2020,
+      "genre": [
+        "Romance",
+        "Drama"
+      ],
+      "plot": "Two artists meet again after years apart.",
+      "director": "J. Moreno",
+      "poster": "afterglow.svg",
+      "ages": [
+        7.1,
+        7.3,
+        7.5,
+        7.7,
+        7.9,
+        6.3
+      ],
+      "color": "#ef976f"
+    },
+    {
+      "id": 4,
+      "title": "Atlas Nine",
+      "year": 2021,
+      "genre": [
+        "Science Fiction",
+        "Adventure"
+      ],
+      "plot": "An astronaut searches a faraway star system.",
+      "director": "A. Stone",
+      "poster": "atlas.svg",
+      "ages": [
+        7.4,
+        7.6,
+        7.8,
+        6.2,
+        6.4,
+        6.6
+      ],
+      "color": "#8b74d8"
+    },
+    {
+      "id": 5,
+      "title": "Echoes",
+      "year": 2022,
+      "genre": [
+        "Mystery",
+        "Drama"
+      ],
+      "plot": "An archivist uncovers the secret of an old village.",
+      "director": "S. Rivera",
+      "poster": "echoes.svg",
+      "ages": [
+        7.7,
+        7.9,
+        6.3,
+        6.5,
+        6.7,
+        6.9
+      ],
+      "color": "#67cbab"
+    },
+    {
+      "id": 6,
+      "title": "Monarch",
+      "year": 2023,
+      "genre": [
+        "Drama",
+        "Thriller"
+      ],
+      "plot": "A family's world changes in a single night.",
+      "director": "J. Moreno",
+      "poster": "monarch.svg",
+      "ages": [
+        6.2,
+        6.4,
+        6.6,
+        6.8,
+        7,
+        7.2
+      ],
+      "color": "#f0b36b"
+    },
+    {
+      "id": 7,
+      "title": "Wildflower",
+      "year": 2024,
+      "genre": [
+        "Romance",
+        "Drama"
+      ],
+      "plot": "A musician finds a new beginning in her hometown.",
+      "director": "A. Stone",
+      "poster": "wildflower.svg",
+      "ages": [
+        6.5,
+        6.7,
+        6.9,
+        7.1,
+        7.3,
+        7.5
+      ],
+      "color": "#d57fb9"
+    },
+    {
+      "id": 8,
+      "title": "Winter Light",
+      "year": 2025,
+      "genre": [
+        "Drama",
+        "Mystery"
+      ],
+      "plot": "A photographer finds hope during a cold winter.",
+      "director": "S. Rivera",
+      "poster": "winter.svg",
+      "ages": [
+        6.8,
+        7,
+        7.2,
+        7.4,
+        7.6,
+        7.8
+      ],
+      "color": "#a9cae6"
+    }
+  ]
+}
