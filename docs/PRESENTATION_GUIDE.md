@@ -4,7 +4,7 @@
 
 ## What problem did you solve?
 
-I explored two movie recommendation methods using the IMDb Extensive dataset. The first compares movie content, while the second looks for patterns in audience ratings.
+I built and ran two movie recommendation approaches using IMDb Extensive movie and ratings files. The first compares movie content, while the second looks for patterns in audience ratings.
 
 ## What is a recommendation system?
 
@@ -48,11 +48,11 @@ MovieLens is used in the classroom example because it includes viewer-to-movie r
 
 ## How did you check the results?
 
-I checked the input columns, verified the similarity calculations, and tested held-out cohort-average predictions. I also ran automated tests using clearly labeled example data, separate from the original IMDb files.
+I checked the input columns, verified the similarity calculations, and tested held-out cohort-average predictions. I saved the computed recommendation tables, a content-based chart, a cohort-similarity chart, and evaluation metrics in the notebook.
 
 ## Why does the interactive website show fictional titles?
 
-The website is a visual example of how the two approaches work. I label its titles and scores as fictional. Actual IMDb results come from running the Python notebook with the original dataset.
+The website is a visual example of how the two approaches work. I label its titles and scores as fictional. Actual IMDb results, with tables and charts, are saved in the separate Python notebook.
 
 ## Short conclusion
 
