@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="690" viewBox="0 0 1600 690" role="img" aria-labelledby="title desc">
+<title id="title">Movie Recommendation Systems — Assignment 8, Juan Luna Santibanez</title><desc id="desc">Dark navy academic cover with two distinct recommendation pipelines for content and rating patterns. IMDb Extensive is the primary dataset and MovieLens is a separate classroom extension.</desc>
+<defs>
+ <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#0b1420"/><stop offset=".58" stop-color="#10283e"/><stop offset="1" stop-color="#07101b"/></linearGradient>
+ <linearGradient id="teal" x2="1" y2="0"><stop stop-color="#6de0bc"/><stop offset="1" stop-color="#9beee0"/></linearGradient>
+ <pattern id="dots" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.15" fill="#789bb5" opacity=".21"/></pattern>
+ <filter id="glow"><feGaussianBlur stdDeviation="65"/></filter>
+</defs>
+<rect width="1600" height="690" rx="25" fill="url(#bg)"/><rect width="1600" height="690" fill="url(#dots)"/><circle cx="1320" cy="160" r="280" fill="#6de0bc" opacity=".075" filter="url(#glow)"/>
+<g font-family="Arial,Helvetica,sans-serif">
+ <text x="90" y="83" fill="#91acc1" font-size="20" letter-spacing="5" font-weight="700">MIAMI DADE COLLEGE   /   CAI2100C   /   ASSIGNMENT 08</text>
+ <rect x="90" y="112" width="76" height="5" rx="2" fill="#6de0bc"/>
+ <text x="90" y="223" fill="#f5fbfd" font-size="80" font-weight="800" letter-spacing="-3">MOVIE</text>
+ <text x="90" y="317" fill="#f5fbfd" font-size="75" font-weight="800" letter-spacing="-3">RECOMMENDATION</text>
+ <text x="90" y="410" fill="url(#teal)" font-size="81" font-weight="800" letter-spacing="-3">SYSTEMS.</text>
+ <text x="93" y="463" fill="#c0d0df" font-size="26">Two methods. Two separate data sources. One notebook.</text>
+ <line x1="90" y1="512" x2="820" y2="512" stroke="#49647b"/>
+ <text x="90" y="556" fill="#d3e0ea" font-size="21" font-weight="700">JUAN LUNA SANTIBANEZ</text>
+ <text x="90" y="592" fill="#a6bbcf" font-size="18">Machine Learning Foundations · Professor Beth Muturi</text>
+ <rect x="1020" y="82" width="493" height="505" rx="25" fill="#132b40" stroke="#43637c" stroke-width="2"/>
+ <g transform="translate(1065 125)">
+  <text y="0" fill="#a8c5d8" font-size="15" letter-spacing="2" font-weight="700">ASSIGNMENT ARCHITECTURE</text>
+  <rect x="0" y="38" width="405" height="90" rx="15" fill="#1e4051" stroke="#6de0bc"/>
+  <text x="24" y="74" fill="#6de0bc" font-size="16" font-weight="700">01  CONTENT-BASED</text>
+  <text x="24" y="104" fill="#f2f7fb" font-size="18">Text → TF-IDF → Cosine</text>
+  <path d="M202 129 L202 153" stroke="#83e5cd" stroke-width="3"/><path d="M194 146 L202 157 L210 146" stroke="#83e5cd" stroke-width="3" fill="none"/>
+  <rect x="0" y="159" width="405" height="90" rx="15" fill="#1e4051" stroke="#6de0bc"/>
+  <text x="24" y="195" fill="#6de0bc" font-size="16" font-weight="700">02  COLLABORATIVE</text>
+  <text x="24" y="225" fill="#f2f7fb" font-size="18">Cohorts → Pearson → MAE/RMSE</text>
+  <line x1="0" y1="276" x2="405" y2="276" stroke="#547085"/>
+  <text x="0" y="308" fill="#e7f5fc" font-size="17" font-weight="700">PRIMARY: IMDb Extensive</text>
+  <text x="0" y="338" fill="#afc6d8" font-size="16">Classroom extension: MovieLens/TMDB</text>
+  <text x="0" y="378" fill="#6de0bc" font-size="15" font-weight="700">CLEAR DATA PROVENANCE · REPRODUCIBLE CODE</text>
+ </g>
+ <rect x="90" y="627" width="1380" height="1" fill="#355268"/><text x="90" y="662" fill="#7f9ab0" font-size="14" letter-spacing="1">CONTENT CHARACTERISTICS  ·  RATING PATTERNS  ·  RESPONSIBLE INTERPRETATION</text>
+</g></svg>
