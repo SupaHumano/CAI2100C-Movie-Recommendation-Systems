@@ -24,7 +24,7 @@ No. I used a user-neighborhood method for the MovieLens extension, and a cohort 
 I split MovieLens ratings into training and test sets with a fixed random seed; I report coverage, MAE, RMSE, and a training-user-mean baseline. For IMDb I withhold observed cohort averages, estimate them from the remaining cohort matrix, and compare MAE/RMSE to a training-group-mean baseline. I never directly compare error magnitudes across their different rating scales.
 
 ## What have I verified on this revision?
-I ran the unified notebook twice in a clean Jupyter kernel with **synthetic test fixtures**, without Python exceptions. That is a software smoke test, not a claim of fresh measurement on genuine course data. Before final Canvas submission I must rerun the unified file with authentic CSVs and save its outputs.
+I tested the auto-loading notebook in three clean Jupyter runs with **synthetic test fixtures** (existing files, simulated Kagglehub download, and unavailable optional MovieLens), without Python exceptions. That is a software smoke test, not a claim of fresh measurement on genuine course data. Before final Canvas submission I must rerun the unified file with authentic CSVs and save its outputs.
 
 ## What is on the website?
 I built a visual educational demo that uses fictional movie titles and scores. I do not present those numbers as scientific IMDb results.
@@ -34,3 +34,4 @@ Content-based systems compare item characteristics, whereas collaborative system
 
 ## Closing statement
 My work is organized as **one assignment notebook**, with two IMDb tasks, a separate MovieLens classroom extension, evaluation, and documented limitations. I can explain the calculations, their input sources and their limits in my own words.
+\n## How do I access the input datasets?\n\nI run my single notebook and let the official `kagglehub` downloader locate the necessary CSV files; I use a documented pinned IMDb mirror if the official Kaggle download cannot be reached. I prefer the teacher's original ZIP for MovieLens and otherwise label my public classroom data as a separate copy. If internet and both sources are blocked, I display a source-specific explanation instead of fabricating results.\n
