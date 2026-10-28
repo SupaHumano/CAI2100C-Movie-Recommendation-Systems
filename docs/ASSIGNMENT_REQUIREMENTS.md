@@ -14,4 +14,5 @@ I map the instructor's classroom notebook and email to my unified submission:
 
 I maintain both data sources independently. IMDb scores are on a 1–10 scale; MovieLens scores are on a 0.5–5 scale. I do not pass classroom data off as IMDb, nor describe demographic group means as individual preferences.
 
-My unified notebook is the deliverable: [Assignment 8](../notebooks/Assignment_8_Movie_Recommendation_Systems.ipynb). I execute the notebook with authentic course datasets before submitting it as complete.
+My unified notebook is the deliverable: [Assignment 8](../notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb). I execute the notebook with authentic course datasets before submitting it as complete.
+\n**My automatic loading:** I download the two exact IMDb CSVs through Kagglehub if they are not attached. The optional MovieLens extension uses the teacher ZIP when present or three public MovieLens CSVs; an unavailable optional source cannot invalidate my IMDb tasks. Network access is necessary for remote retrieval.\n

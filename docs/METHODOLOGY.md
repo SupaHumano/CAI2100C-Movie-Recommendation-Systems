@@ -16,7 +16,7 @@ IMDb Extensive provides aggregated age/gender audience ratings rather than `user
 
 ## My classroom extension — MovieLens/TMDB
 
-I read the original classroom files: `movies_metadata.csv`, `links_small.csv`, `ratings_small.csv` and a bounded first-20,000-row sample of the larger `ratings.csv`. I link metadata with MovieLens IDs, compare text descriptions with TF-IDF, and implement a separate user-based collaborative neighborhood with training-only centering. I evaluate held-out individual user ratings using MAE/RMSE and a paired user-mean baseline.
+I prefer the original teacher ZIP, and if it is absent I retrieve the three required modeling CSVs from public MovieLens/TMDB Kaggle or a documented public mirror. I read `movies_metadata.csv`, `links_small.csv` and `ratings_small.csv`. I read a bounded first-20,000-row sample of the much larger `ratings.csv` **only when it is already provided**. I link metadata with MovieLens IDs, compare text descriptions with TF-IDF, and implement a separate user-based collaborative neighborhood with training-only centering. I evaluate held-out individual user ratings using MAE/RMSE and a paired user-mean baseline.
 
 This extension relates to the instructor's follow-up request to consider both datasets. The specific source names in that email were not explicit, so I label my extra work as an interpretation, not as an additional written task.
 
@@ -24,7 +24,7 @@ This extension relates to the instructor's follow-up request to consider both da
 
 The earlier IMDb-only version of my notebook stored an experiment on 85,855 original movie records and a selected sample of 3,000 eligible films, with 2,700 held-out cohort averages, MAE 0.1836 and RMSE 0.2477. Those are **historical results from a previous version**, not independently reproduced metrics for my newly unified notebook.
 
-My updated unified notebook passed two clean Jupyter executions against **explicitly synthetic test fixtures**. I must rerun it with authentic Kaggle CSVs and the instructor ZIP and save authentic output cells before stating that my final unified submission has been executed on both original datasets.
+My renamed auto-loading notebook passed three independent clean Jupyter executions with **explicitly synthetic test fixtures** (12/12 code cells in all three scenarios: already supplied data, mocked automatic Kaggle downloads, and optional MovieLens unavailable). I did **not** run the real online Kaggle download in this network-restricted test environment. I must execute it on genuine downloaded CSVs and save authentic outputs before submitting a scientific result.
 
 I recorded the earlier IMDb mirror version and recorded SHA-256 checksums in [IMDb data provenance](IMDb_DATA_PROVENANCE.json), and classroom historical evidence in [classroom data verification](CLASSROOM_DATA_VERIFICATION.md).
 
@@ -33,3 +33,4 @@ I recorded the earlier IMDb mirror version and recorded SHA-256 checksums in [IM
 - Beth Muturi, classroom Assignment 8 notebook.
 - [Stefano Leone, IMDb Extensive](https://www.kaggle.com/datasets/stefanoleone992/imdb-extensive-dataset).
 - [Rounak Banik, Movie Recommender Systems](https://www.kaggle.com/code/rounakbanik/movie-recommender-systems).
+\n## My automatic source loader\n\nI use the official `kagglehub.dataset_download(handle, path=filename)` interface, restricted to the exact files I need. For IMDb I verify the immutable public backup against the SHA-256 values in my provenance report. My fallback public MovieLens mirror is a distinct source, not a certified byte-identical copy of the instructor's ZIP. If public classroom data are inaccessible, I skip that optional experiment without fabricating findings.\n
