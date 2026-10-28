@@ -1,37 +1,29 @@
-# My oral presentation — Assignment 8
+# My presentation — Assignment 8
 
-**Juan Luna Santibanez · CAI2100C · Professor Beth Muturi**
+**Juan Luna Santibanez** · Miami Dade College · CAI2100C · Professor Beth Muturi
 
-## What did I build?
+## Introduction
 
-I built **one Jupyter notebook** with the **two IMDb Extensive recommender tasks** at the end of my instructor's notebook: Content-Based Filtering and a ratings-pattern collaborative approximation.
-
-## What data do I use?
-
-I included two **human-readable CSV datasets** in the notebook: **3,000 authentic IMDb movies** and **3,000 matching cohort-rating rows**. They are a selected high-vote research sample, not the full IMDb Extensive catalog. The data cell is folded for readability and uses Pandas `StringIO` to load the records without external files.
+I built two movie recommendation approaches using an authentic selected IMDb Extensive research sample. My source dataset is stored in two separate CSV files, as in my Assignment 7 project. My notebook focuses on the actual algorithms, charts, experiments and conclusions.
 
 ## Task 1 — Content-Based Filtering
 
-I use movie genre, director, actors and description as text features. TF-IDF weights informative words; cosine similarity ranks titles with related metadata. Textual similarity is not proof that a viewer likes the films.
+I represent each film by metadata describing its genre, director, actors and story. TF-IDF transforms the text into numeric features. Cosine similarity produces a list of films with similar characteristics. My notebook shows ten recommendations and a bar chart.
 
-## Task 2 — Rating-pattern collaborative approximation
+## Task 2 — Collaborative Filtering
 
-I use average IMDb ratings and vote counts for six demographic cohorts. I calculate Pearson similarity between groups and estimate selected group-average ratings. IMDb's published cohort data do not identify individual viewers, so this approach **is not Surprise SVD or a personalized user-based recommender**.
+I examine IMDb's available age/gender **aggregate rating patterns** using Pearson correlation between groups. I evaluate hidden observed averages with MAE, RMSE and a training-mean baseline. IMDb Extensive does not supply individual viewer histories, so my output estimates group averages rather than personal preferences.
 
-## How did I evaluate my model?
+## Data and scope
 
-I withhold approximately 15% of valid cohort ratings, preserving enough training observations, and calculate MAE and RMSE on those withheld cohort averages. I compare against a training-group-mean baseline. I also show a cohort-similarity chart. I do not compare numeric cosine similarity directly with prediction errors.
+I used 3,000 authentic selected IMDb films and 3,000 matching cohort-rating rows. The research sample favors highly voted movies. I do not claim to have processed every film in IMDb Extensive.
 
-## How can I reproduce the results?
+## Running the project
 
-I open the notebook in Colab or Jupyter and select **Run all**. There is no dataset upload, download, token, ZIP, encoding decoder, or additional file preparation. The notebook contains the research data, code, results, graphs, and conclusions.
+The independent ZIP contains my notebook and both CSV files. I open the notebook in Jupyter, VS Code, or another compatible IDE and choose Run all. In Colab, opening only the GitHub notebook automatically downloads the missing CSVs from the same repository. This is the same method used in Assignment 7.
 
-## Why does the website display fictional movies?
+## Final conclusion
 
-I built the site as a separate teaching illustration; fictional titles and example scores are not IMDb model outputs. The real research numbers and my code are in my notebook.
+Content-Based Filtering compares *movie attributes*; my rating-pattern approach compares *observed group averages*. Both methods illustrate different ideas behind movie recommendation. I report their inputs and limits without confusing group ratings with individual user preferences.
 
-## What did I learn?
-
-Recommendation design depends on the available data. Content-Based Filtering compares item characteristics; rating-pattern methods compare observed preferences or aggregated responses. IMDb Extensive's cohort averages do not support individual-level personalization.
-
-**My notebook:** [Assignment 8 — Juan Luna Santibanez](../notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb).
+[My notebook](../notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb) · [My project](https://github.com/SupaHumano/CAI2100C-Movie-Recommendation-Systems)

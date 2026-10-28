@@ -1,31 +1,29 @@
 # My methodology — Assignment 8
 
-**Juan Luna Santibanez · CAI2100C · Professor Beth Muturi**
+**Juan Luna Santibanez** · CAI2100C · Professor Beth Muturi
 
-## My study scope
+## My data
 
-I completed the **two IMDb Extensive tasks** explicitly printed at the end of the instructor's assignment notebook. I used a **selected research sample of 3,000 real IMDb movies** and corresponding aggregated cohort rating records. I did **not** claim to model the full source catalog. Sampling high-vote movies changes which titles can be recommended and limits generalizability.
+I use `data/IMDb movies.csv` and `data/IMDb ratings.csv`. They contain **3,000 selected authentic IMDb Extensive film records** and their **3,000 corresponding demographic-rating rows**. The sample includes well-voted films and does not represent the complete IMDb catalogue.
 
-## Simple, self-contained data access
+My notebook follows Assignment 7's simple loading pattern: it finds local CSV files first and retrieves them from the same GitHub repository only if missing. The dataset records are **not embedded in the Python source code**.
 
-I embedded the two selected CSV files **as plain CSV text inside a folded Jupyter code cell**. I read them with `pandas.read_csv(StringIO(...))`. That is the only data loading step. I do not use external CSV paths, network access, compressed encoded payloads, downloaders or checksum routines in the notebook.
+## Task 1 — Content-Based Filtering
 
-## Task 1 — TF-IDF content recommendations
+I build text features from movie genre, director, cast and descriptions. With `TfidfVectorizer` I create sparse vectors and use cosine similarity to rank movies related to the query. The query itself is excluded, and I display the ten highest-ranked results with a graph. Content similarity is not a prediction of an individual user's personal preference.
 
-I combine genre, actors, directors and descriptions; generate sparse TF-IDF unigram/bigram vectors with a bounded vocabulary; and compute cosine similarity for a query movie. I exclude the query itself and display ten related titles with a horizontal similarity bar chart.
+## Task 2 — Collaborative Filtering approximation
 
-## Task 2 — IMDb cohort rating-pattern approximation
+I construct a group-by-movie matrix from six gender-and-age cohort rating averages. A group/movie observation is included only when it has at least **30 votes**. I calculate Pearson correlation between cohorts with sufficient common rated movies. I withhold approximately **15%** of usable averages, estimate them using training observations and compare MAE/RMSE against a training-group-mean baseline. My conclusions concern *group-average* ratings on IMDb's 1–10 scale.
 
-My 6×N matrix contains ratings from six age/gender cohort averages where cohort vote count is at least 30. I estimate Pearson correlations using co-observed films and require at least 15 common observations for similarity. I hold out about 15% of the usable cohort averages, calculate similarity using **training cells**, and estimate held-out group means from positively correlated groups. I evaluate MAE, RMSE and a training-group-mean baseline on the 1–10 rating scale. I visualize cohort correlations and display the estimated top movie-group averages.
+The IMDb source does not provide `userId–movieId–rating` events; therefore I do **not** claim this is personalized user-neighborhood filtering or SVD.
 
-**Critical limit:** I do not call the approach personalized Collaborative Filtering or SVD. IMDb Extensive lacks the individual user–movie ratings needed for conventional user-based SVD training.
+## My reproducibility check
 
-## Verification
+I executed this notebook **twice from a clean temporary project directory** with its two CSV files present: seven executable cells completed in each test without exceptions, with recommendations, graphs and metrics. When opened by itself in Colab, the notebook obtains these CSVs from my public GitHub repository.
 
-I executed the same two-task notebook twice with fresh Jupyter kernels and no attached data files. Both runs completed all seven code cells without exceptions, regenerating tables and figures. The delivered file has its outputs saved.
+## References
 
-## Sources
-
-- Beth Muturi, Assignment 8 classroom notebook, Miami Dade College.
-- [IMDb Extensive](https://www.kaggle.com/datasets/stefanoleone992/imdb-extensive-dataset).
-- [scikit-learn vectorization](https://scikit-learn.org/stable/modules/feature_extraction.html).
+- Professor Beth Muturi, CAI2100C Assignment 8.
+- [IMDb Extensive, Stefano Leone](https://www.kaggle.com/datasets/stefanoleone992/imdb-extensive-dataset).
+- [Scikit-learn TF-IDF](https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html).
