@@ -1,0 +1,100 @@
+name: Assignment 8 one-time Colab presentation validation
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/assignment8-colab-ui-onetime.yml']
+permissions:
+  contents: write
+jobs:
+  improve-and-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install Jupyter validation dependencies
+        run: python -m pip install -q numpy pandas scipy scikit-learn matplotlib nbformat nbclient ipykernel
+      - name: Fold only embedded source payload and preserve full scientific outputs
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb')
+          nb=json.loads(p.read_text(encoding='utf-8'))
+          orig_count=len(nb['cells'])
+          code=[(i,len(''.join(c['source']))) for i,c in enumerate(nb['cells']) if c['cell_type']=='code']
+          biggest=max(code,key=lambda x:x[1])
+          assert biggest[1] > 100_000, ('Expected encoded source snapshot not found',biggest)
+          i=biggest[0]
+          cell=nb['cells'][i]
+          source=''.join(cell['source'])
+          assert '_EMBEDDED_FILES' in source or 'EMBEDDED_FILES' in source, 'Do not hide unrelated code'
+          print('Found embedded dataset cell at index',i,'characters',len(source),flush=True)
+          title='# @title 00 · Cargar los 5 datasets auténticos integrados (sin descargas) { display-mode: "form" }\n'
+          desc='# @markdown Esta celda ejecuta la verificación SHA-256 y extrae los archivos ya incluidos. El bloque técnico permanece plegado.\n'
+          if not source.startswith('# @title'):
+              cell['source']=[title,desc]+cell['source']
+          meta=cell.setdefault('metadata',{})
+          meta['cellView']='form'
+          meta.setdefault('colab',{})
+          meta.setdefault('jupyter',{})['source_hidden']=True
+          meta['jupyter']['outputs_hidden']=False
+          notice=(
+            '### 00 — Dataset integrity (verified and included)\n\n'
+            'I included five **authentic source-data research snapshots** inside this notebook. '
+            'The code that contains compressed data is displayed as a **collapsed execution form in Google Colab**, '
+            'so readers can focus on the methods, charts and conclusions. '
+            'Run all cells normally; no CSV downloads or manual configuration are required. '
+            'The cell can be expanded to audit its contents.\n\n'
+            '**Sources:** 3,000 selected IMDb movies and 3,000 matching IMDb cohort-rating rows; '
+            '9,099 MovieLens/TMDB metadata rows, 9,125 ID links, 100,004 individual ratings. '
+            'This is a documented research sample, **not the entire original IMDb database**.\n'
+          )
+          nb['cells'].insert(i,{'cell_type':'markdown','id':'data-integrity-folded-intro','metadata':{},'source':notice.splitlines(True)})
+          nb.setdefault('metadata',{}).setdefault('colab',{})['toc_visible']=True
+          assert len(nb['cells'])==orig_count+1
+          assert sum(c['cell_type']=='code' for c in nb['cells'])==13
+          p.write_text(json.dumps(nb,ensure_ascii=False,indent=1)+'\n',encoding='utf-8')
+          print('Colab form metadata applied; source preserved; 13 Python cells unchanged.',flush=True)
+          PY
+      - name: Execute entire notebook from clean offline-data directory
+        run: |
+          python - <<'PY'
+          import tempfile
+          from pathlib import Path
+          import nbformat
+          from nbclient import NotebookClient
+          p=Path('notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb')
+          nb=nbformat.read(p,as_version=4)
+          nbformat.validate(nb)
+          folded=[c for c in nb.cells if c.cell_type=='code' and c.metadata.get('cellView')=='form']
+          assert len(folded)==1
+          assert folded[0].source.startswith('# @title 00')
+          assert folded[0].metadata['jupyter']['source_hidden']
+          assert len(folded[0].source)>100_000
+          with tempfile.TemporaryDirectory() as temp:
+              executed=NotebookClient(nb,timeout=480,kernel_name='python3',allow_errors=False,resources={'metadata':{'path':temp}}).execute()
+          codes=[c for c in executed.cells if c.cell_type=='code']
+          failures=[o for c in codes for o in c.get('outputs',[]) if o.get('output_type')=='error']
+          assert len(codes)==13 and all(c.execution_count is not None for c in codes) and not failures
+          assert sum(bool(c.get('outputs',[])) for c in codes)>=6
+          nbformat.write(executed,p)
+          check=nbformat.read(p,as_version=4)
+          nbformat.validate(check)
+          folded2=[c for c in check.cells if c.cell_type=='code' and c.metadata.get('cellView')=='form']
+          assert len(folded2)==1 and folded2[0].metadata['jupyter']['source_hidden']
+          print('PASS: full offline-data run 13/13 code cells; saved outputs; hidden Base64 cell; unchanged embedded real datasets.',flush=True)
+          print('Notebook bytes:',p.stat().st_size,flush=True)
+          PY
+      - name: Commit the final notebook and remove temporary workflow
+        run: |
+          git config user.name "assignment8-validation[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/assignment8-colab-ui-onetime.yml
+          git add notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb
+          git commit -m "Assignment 8: fold embedded data in Colab, verify all 13 executed cells"
+          git push origin HEAD:main
