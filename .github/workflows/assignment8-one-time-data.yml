@@ -1,0 +1,47 @@
+name: Assignment 8 data layout verification
+on:
+  push:
+    branches: [assignment8-final-match-assignment7-20261027]
+    paths: ['.github/workflows/assignment8-one-time-data.yml']
+permissions:
+  contents: write
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: assignment8-final-match-assignment7-20261027
+      - name: Extract original real IMDb samples into two ordinary CSV files
+        run: |
+          python - <<'PY'
+          import json,ast,csv,io
+          from pathlib import Path
+          path=Path('notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb')
+          nb=json.loads(path.read_text(encoding='utf-8'))
+          old=next(c for c in nb['cells'] if c['cell_type']=='code' and '_IMDB_MOVIES_CSV' in ''.join(c['source']))
+          assigns={}
+          for st in ast.parse(''.join(old['source'])).body:
+              if isinstance(st,ast.Assign) and len(st.targets)==1 and isinstance(st.targets[0],ast.Name):
+                  name=st.targets[0].id
+                  if name in ('_IMDB_MOVIES_CSV','_IMDB_RATINGS_CSV'):
+                      assigns[name]=ast.literal_eval(st.value)
+          assert len(assigns)==2
+          expected={'IMDb movies.csv':('_IMDB_MOVIES_CSV',1365983),'IMDb ratings.csv':('_IMDB_RATINGS_CSV',238143)}
+          d=Path('data');d.mkdir(exist_ok=True)
+          for filename,(var,size) in expected.items():
+              content=assigns[var]
+              target=d/filename
+              target.write_text(content,encoding='utf-8',newline='')
+              assert target.stat().st_size==size,(filename,target.stat().st_size)
+              rows=list(csv.DictReader(io.StringIO(content)))
+              assert len(rows)==3000,(filename,len(rows))
+              print('Prepared',filename,'rows:',len(rows),'bytes:',size)
+          PY
+      - name: Commit the two CSV research source files
+        run: |
+          git config user.name "Juan Luna Santibanez"
+          git config user.email "286504864+SupaHumano@users.noreply.github.com"
+          git add "data/IMDb movies.csv" "data/IMDb ratings.csv"
+          git commit -m "Assignment 8: retain the two IMDb CSV datasets in data/"
+          git push origin HEAD:assignment8-final-match-assignment7-20261027
