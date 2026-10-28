@@ -3,35 +3,36 @@
 **Juan Luna Santibanez | CAI2100C | Professor Beth Muturi**
 
 ## What problem did I solve?
-I designed and tested two movie recommendation approaches for the IMDb Extensive tasks and a separately labeled classroom extension using MovieLens/TMDB.
+I built an authentic-source **single-file** movie-recommendation study with the two final IMDb Extensive assignment methods, plus a clearly identified MovieLens/TMDB classroom extension. I embedded validated source-data snapshots into the Jupyter notebook, so it runs without downloading CSVs.
 
-## What did the final assignment require?
-I read two final tasks in my instructor's notebook: **Content-Based Filtering** and **Collaborative Filtering**, both referencing IMDb Extensive. In a follow-up email my instructor wrote “Please use both datasets,” so I also included the MovieLens/TMDB classroom example as a separate extension. I did not treat the two sources as one dataset.
+## What exactly did my teacher assign?
+I read the instructor's notebook: Task 1 asks for **Content-Based Filtering** using IMDb Extensive, and Task 2 asks for **Collaborative Filtering** using IMDb Extensive. A follow-up email requested “both datasets,” so I retained MovieLens/TMDB as a separate classroom extension. I do not claim the email explicitly named both sources.
 
-## Which data did I use?
-For IMDb I use `IMDb movies.csv` and `IMDb ratings.csv`. For my classroom extension I use `movies_metadata.csv`, `links_small.csv`, and `ratings_small.csv`; I inspect only the first 20,000 rows of the large `ratings.csv`.
+## Which authentic source records are in my notebook?
+My source snapshots include **3,000** selected IMDb movie records, **3,000** corresponding aggregate IMDb rating records, **9,099** MovieLens/TMDB metadata records, **9,125** link rows, and **100,004** user-rating events. I checked full original IMDb SHA-256 fingerprints *before subsetting*, and verify the embedded snapshot hashes when I run the notebook. These are **research subsets**, not the entire original IMDb and class datasets.
 
-## What is content-based filtering?
-I compare movie metadata. My TF-IDF vectorizer turns movie text into numerical features, and cosine similarity finds related movie titles. Similar text does not guarantee that a particular viewer will enjoy a film.
+## Why can I click Run all with no CSV files?
+I embedded compressed CSV research snapshots directly in my notebook. Its first code cell extracts them into temporary storage and checks their fingerprints; all remaining code reads the verified extracted files. No separate CSV, Kaggle account, ZIP or source network access is required. Standard Python scientific dependencies are still needed.
 
-## What does collaborative filtering mean?
-I estimate ratings from shared rating patterns. My MovieLens extension uses individual user–movie ratings and positive similarities among nearby users. My IMDb task has **only aggregate averages by six audience cohorts**; I estimate group means, not personalized viewer scores.
+## What is Content-Based Filtering?
+I combine descriptions, genres, directors and actors, calculate TF-IDF term weights and use cosine similarity to find movies related to a selected title. Content similarity is not an individual's enjoyment prediction.
 
-## Did I use the exact Surprise/SVD model from the classroom example?
-No. I used a user-neighborhood method for the MovieLens extension, and a cohort correlation method for IMDb. I explain both algorithms honestly and cite the classroom reference instead of claiming that my code reproduces Surprise/SVD.
+## What does Collaborative Filtering mean here?
+I compare age/gender **cohort-average** ratings using Pearson correlation. IMDb Extensive does not provide identifiable individual-user rating histories, so my estimates are group-level approximations. I do not mislabel them as Surprise/SVD or individualized recommendations.
 
-## How did I evaluate my methods?
-I split MovieLens ratings into training and test sets with a fixed random seed; I report coverage, MAE, RMSE, and a training-user-mean baseline. For IMDb I withhold observed cohort averages, estimate them from the remaining cohort matrix, and compare MAE/RMSE to a training-group-mean baseline. I never directly compare error magnitudes across their different rating scales.
+## What did I implement in the MovieLens extension?
+I use individual user–movie rating events and user-neighborhood similarities with a training/test holdout. This is **not** the exact Surprise SVD algorithm used in the classroom example. My film metadata and MovieLens IDs come from a separate pinned public MovieLens/TMDB collection, not a claimed identical copy of the teacher ZIP.
 
-## What have I verified on this revision?
-I tested the auto-loading notebook in three clean Jupyter runs with **synthetic test fixtures** (existing files, simulated Kagglehub download, and unavailable optional MovieLens), without Python exceptions. That is a software smoke test, not a claim of fresh measurement on genuine course data. Before final Canvas submission I must rerun the unified file with authentic CSVs and save its outputs.
+## How did I validate the models?
+I compute similarity rankings for the two content-based sections. For both rating approaches, I withhold observations, compute MAE/RMSE on the appropriate rating scale, and compare against a training-only baseline. I do not directly compare the numeric MAE of IMDb group averages with the MAE of MovieLens individual ratings.
 
-## What is on the website?
-I built a visual educational demo that uses fictional movie titles and scores. I do not present those numbers as scientific IMDb results.
+## Was the final file really executed?
+Yes. A GitHub validation runner downloaded the genuine pinned CSV sources, checked the complete original IMDb hashes, embedded five research snapshots and executed **13/13 Python code cells in a clean working directory without the source files**. The executed outputs are saved inside the published `.ipynb`. The scientific evidence uses **documented research snapshots**, not all source records.
 
-## What did I learn?
-Content-based systems compare item characteristics, whereas collaborative systems compare rating patterns. I learned why raw individual ratings and cohort-average statistics support different levels of personalization.
+## Why does my website have fictional movies?
+I designed a separate interactive educational lab to explain both approaches. The nine fictional movies and illustration scores are not the real training records or the measured IMDb outputs. The academic research is in the notebook.
 
-## Closing statement
-My work is organized as **one assignment notebook**, with two IMDb tasks, a separate MovieLens classroom extension, evaluation, and documented limitations. I can explain the calculations, their input sources and their limits in my own words.
-\n## How do I access the input datasets?\n\nI run my single notebook and let the official `kagglehub` downloader locate the necessary CSV files; I use a documented pinned IMDb mirror if the official Kaggle download cannot be reached. I prefer the teacher's original ZIP for MovieLens and otherwise label my public classroom data as a separate copy. If internet and both sources are blocked, I display a source-specific explanation instead of fabricating results.\n
+## Closing conclusion
+I learned why a recommender's input structure determines what it can estimate. Content-Based Filtering finds similarity from film characteristics, whereas Collaborative Filtering searches rating patterns. IMDb aggregate cohorts and MovieLens individual ratings answer different questions; my report makes that limitation explicit.
+
+**My canonical notebook:** [Assignment 8 — Juan Luna Santibanez](../notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb).
