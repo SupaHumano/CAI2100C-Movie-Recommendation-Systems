@@ -1,97 +1,119 @@
 <div align="center">
 
-# Movie Recommendation Systems
+# Movie Recommendation Systems — Assignment 8
 
-### CAI2100C-2267-6908 | Machine Learning Foundations | Assignment 8
+### CAI2100C-2267-6908 · Machine Learning Foundations
 
 **Juan Luna Santibanez**  
-**Miami Dade College** | **Professor Beth Muturi**
+**Miami Dade College | Professor Beth Muturi**
 
-![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
-![scikit-learn](https://img.shields.io/badge/scikit--learn-TF--IDF%20%2B%20Similarity-F7931E?logo=scikitlearn&logoColor=white)
-![Jupyter](https://img.shields.io/badge/Jupyter-One_Notebook-F37626?logo=jupyter&logoColor=white)
-![Course](https://img.shields.io/badge/MDC-CAI2100C-173B69)
-![QA](https://img.shields.io/badge/QA-Synthetic_Smoke_Tested-25805C)
+![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-TF--IDF%20%2B%20Collaborative-F7931E?logo=scikitlearn&logoColor=white)
+![Jupyter](https://img.shields.io/badge/Jupyter-One_Executed_Notebook-F37626?logo=jupyter&logoColor=white)
+![MDC](https://img.shields.io/badge/MDC-CAI2100C-173B69)
+![Status](https://img.shields.io/badge/Data-Verified_Offline_Research_Snapshots-25805C)
 
-**Two recommendation methods. Two distinct sources. One reproducible notebook.**
+**Two final IMDb tasks. One independent MovieLens extension. One self-contained notebook.**
 
-*What changes when I recommend a film from its characteristics instead of rating patterns?*
+*How do movie characteristics and audience rating patterns generate different recommendations?*
 
-[**Google Colab**](https://colab.research.google.com/github/SupaHumano/CAI2100C-Movie-Recommendation-Systems/blob/main/notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb) · [**Jupyter Notebook**](notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb) · [**IMDb Dataset**](https://www.kaggle.com/datasets/stefanoleone992/imdb-extensive-dataset) · [**Interactive Demo**](https://supahumano.github.io/CAI2100C-Movie-Recommendation-Systems/)
+[**Google Colab**](https://colab.research.google.com/github/SupaHumano/CAI2100C-Movie-Recommendation-Systems/blob/main/notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb) · [**Download notebook on GitHub**](notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb) · [**Data provenance**](docs/OFFLINE_PROVENANCE.json) · [**Live educational demo**](https://supahumano.github.io/CAI2100C-Movie-Recommendation-Systems/)
 
 </div>
 
-![Academic cover: Movie Recommendation Systems, two algorithms and two separate data sources](assets/assignment8-cover.svg)
+![My Assignment 8 academic cover](assets/assignment8-cover.svg)
 
 ---
 
-[Overview](#overview) · [Assigned Tasks](#assignment-objectives) · [Methods](#how-my-models-work) · [Evidence](#results-and-evidence) · [Live Lab](#interactive-movie-lab) · [Run](#run-the-notebook) · [Structure](#repository-structure) · [Sources](#references)
+[Overview](#overview) · [Tasks](#my-two-final-assignment-tasks) · [Classroom](#my-separate-classroom-extension) · [Data](#embedded-authentic-research-subsets) · [Validation](#what-i-verified) · [Run](#run-the-exact-notebook-i-submitted) · [Presentation](#my-presentation) · [Sources](#academic-references)
 
 ## Overview
 
-I built a **single Python/Jupyter notebook** for the two final tasks in Professor Muturi's Assignment 8: a **Content-Based Recommender** and a **Collaborative Recommendation approach** using the assigned [IMDb Extensive dataset](https://www.kaggle.com/datasets/stefanoleone992/imdb-extensive-dataset). I also included a **separately labeled MovieLens/TMDB classroom extension** in response to the follow-up instruction, *“Please use both datasets.”* The email did not identify the datasets by name; I document my interpretation rather than presenting it as an unambiguous new assignment requirement.
+I built **one fully executed Jupyter notebook** containing two final IMDb Extensive recommendation tasks and a separately labeled MovieLens/TMDB classroom extension. I identified and verified the **original IMDb source CSVs by SHA-256** before extracting the exact research rows needed for my experiments.
 
-**My key distinction:** IMDb Extensive supplies *average ratings for demographic cohorts*, whereas MovieLens supplies *individual user–movie ratings*. I do not merge their scores, compare the raw errors across their different scales, or claim that cohort averages predict a particular viewer's preference.
+I embedded the resulting genuine **research snapshots** into the notebook itself. I do **not** mislabel the snapshots as the entire 85,855-film original IMDb database or claim to include the complete instructor ZIP. This distinction makes the analysis both reproducible and academically transparent.
 
-## Assignment Objectives
+**This notebook no longer requires Kaggle login, network access to download data, file uploads, or a teacher ZIP.** Opening it in Colab and choosing **Runtime → Run all** extracts the embedded source snapshots, checks their SHA-256 hashes, runs the mathematical methods and recreates its metrics and charts.
 
-| Scope | My implementation | Dataset | Why it matters |
-|:---|:---|:---|:---|
-| **Task 1** | TF-IDF + cosine similarity | IMDb Extensive | Find films with similar content |
-| **Task 2** | Cohort correlation + held-out prediction | IMDb Extensive | Understand patterns in aggregated ratings |
-| **Classroom extension** | Content similarity + user-neighborhood ratings | MovieLens/TMDB | Demonstrate individual user interactions separately |
+![My project lab preview](assets/assignment8-lab-preview.svg)
 
-Both final numbered tasks in the instructor's notebook reference **IMDb Extensive**. The extension is visibly optional in my organization and does **not** replace either final task. The instructor's classroom demonstration uses Surprise/SVD; my neighborhood-based extension is a different collaborative method and I do not describe it as an exact SVD reproduction.
+## My two final assignment tasks
 
-## How My Models Work
+| Task | My method | Dataset | What I evaluate |
+|:--|:--|:--|:--|
+| **1 — Content-Based** | TF-IDF on genres, descriptions, actors and directors; cosine similarity | IMDb Extensive research snapshot | Related-title ranking and similarity chart |
+| **2 — Collaborative** | Pearson similarity among six age/gender rating cohorts | IMDb Extensive rating snapshot | Held-out cohort-average MAE/RMSE and training-only mean baseline |
 
-### Task 1 — Content-Based
+**Scientific limitation:** IMDb Extensive provides *group-level average ratings*, not each viewer's identity and film ratings. My cohort-based method is an **approximation**, not individual-personalized collaborative filtering or SVD. I explicitly distinguish these targets.
 
-I combine **genre, director, cast and description**, vectorize the text with TF-IDF and rank other titles by cosine similarity. Similarity measures overlap in the chosen text features, **not** the probability that somebody will like a film.
+### Task 1 — My content-based recommendations
 
-![Two recommendation methods: content and collaborative](assets/methods.svg)
+![Metadata-to-similarity workflow](assets/content.svg)
 
-### Task 2 — Collaborative approximation
+I convert film metadata into text features with `TfidfVectorizer`, then rank other films using cosine similarity to the selected film. The similarity score measures characteristics of items, not a person's satisfaction.
 
-I build a matrix of six age/gender cohorts by movie. After minimum-vote filtering, I compare cohort patterns with Pearson correlation, use observed neighboring groups to estimate held-out cohort means, and report **MAE and RMSE** alongside a mean-rating baseline. This is *group-level estimation*, not personal recommendation or Surprise SVD.
+### Task 2 — My cohort-rating approximation
 
-### My classroom extension — individual ratings
+![Cohort patterns workflow](assets/collaborative.svg)
 
-I load the authentic instructor MovieLens/TMDB source, keep it separate from IMDb, and compare item descriptions and user-neighborhood rating predictions. I inspect the large `ratings.csv` using a bounded sample rather than loading it all into memory.
+I create a six-cohort rating matrix, exclude observations with insufficient cohort votes, calculate Pearson correlations and validate estimates on withheld observed cohort averages. I report a training-only baseline instead of claiming predictive advantage without a comparison.
 
-## Results and Evidence
+## My separate classroom extension
 
-The existing repository preserves figures from an **earlier executed IMDb-only notebook**, which studied 3,000 eligible titles and reported **MAE 0.1836 and RMSE 0.2477** on *held-out cohort averages* (1–10 scale, 2,700 observations). These are *historical results*, **not** fresh outputs from this revised unified notebook.
+My instructor's lesson used MovieLens/TMDB to demonstrate recommenders on **individual viewer ratings**. I included a separately labeled extension because the follow-up email requested “both datasets” without naming them. The two final tasks in the supplied assignment notebook both reference IMDb Extensive.
 
-| Earlier IMDb content-based visualization | Earlier IMDb cohort-correlation visualization |
-|:---:|:---:|
-| ![Previously computed IMDb content recommendations](assets/imdb-content-recommendations.png) | ![Previously computed IMDb cohort correlation](assets/imdb-cohort-correlation.png) |
+In my MovieLens/TMDB extension, I compare movie overview text and evaluate **user-neighborhood collaborative filtering** on held-out individual movie ratings. This is **not** the Surprise/SVD implementation from the lecture; I disclose the algorithmic distinction. The public Kaggle-derived snapshots are not claimed byte-identical to my instructor's original ZIP.
 
-I retained the exact [IMDb dataset provenance and recorded SHA-256 values](docs/IMDb_DATA_PROVENANCE.json) and the earlier [classroom verification](docs/CLASSROOM_DATA_VERIFICATION.md) as source-specific historical evidence.
+## Embedded authentic research subsets
 
-**Current quality gate:** I validated the renamed, auto-loading notebook with three independent 12/12-cell synthetic-fixture tests: local input files, automatic-loader mock, and IMDb-only with optional MovieLens unavailable. All three completed without Python errors. The auto-loader's real-world network success was **not verified in this offline testing environment**. **The current notebook has not yet saved a new execution with authentic CSVs.** I must run it once online, save the authentic outputs and verify provenance before academic submission.
+This is one real-data **research snapshot**, not a fabricated demonstration or a download-at-run-time script. The publicly documented source versions are pinned by their original repository commits. I retain every embedded file's hash in [OFFLINE_PROVENANCE.json](docs/OFFLINE_PROVENANCE.json).
 
-## Interactive Movie Lab
+| Embedded file | Source | Authentic research rows |
+|:--|:--|--:|
+| `IMDb movies.csv` | IMDb Extensive | **3,000** |
+| `IMDb ratings.csv` | IMDb Extensive | **3,000** |
+| `movies_metadata.csv` | MovieLens/TMDB | **9,099** |
+| `links_small.csv` | MovieLens/TMDB | **9,125** |
+| `ratings_small.csv` | MovieLens/TMDB | **100,004** |
 
-[**Explore my interactive lab**](https://supahumano.github.io/CAI2100C-Movie-Recommendation-Systems/)
+The original IMDb source was first verified with its **complete-file SHA-256 checksums**; I then selected the 3,000 most-voted eligible movies by a reproducible criterion and matched their cohort rating rows by `imdb_title_id`. For MovieLens, I kept all `ratings_small.csv` rating events and link rows and the metadata associated with those links. The very large `ratings.csv` is unnecessary for this model and is not embedded.
 
-I designed an interactive, responsive teaching website where I can select a film, change between content-based and cohort-rating views, and inspect ranked examples. The **nine movie titles, poster graphics and audience scores are fictional**. The browser demonstration is intentionally different from scientific outputs computed by the Python notebook.
+**What this means:** my experiment is performed on clearly documented source subsets, not the complete original datasets. I never present a sample size as a full-dataset size, and I never attribute MovieLens results to IMDb.
 
-![Interactive lab preview](assets/assignment8-lab-preview.svg)
+## What I verified
 
-The lab explains both methods and links back to the single canonical notebook, methodology and my oral presentation guide.
+I generated the final notebook in a GitHub validation runner, downloading the original real source CSVs from pinned GitHub mirrors. The build passed these gates:
 
-## My automatic dataset loading\n\nI retrieve authentic files only: `IMDb movies.csv` and `IMDb ratings.csv` from [Stefano Leone's IMDb Extensive dataset](https://www.kaggle.com/datasets/stefanoleone992/imdb-extensive-dataset), and when possible, the three modeling files `movies_metadata.csv`, `links_small.csv` and `ratings_small.csv` from [Rounak Banik's public MovieLens/TMDB dataset](https://www.kaggle.com/datasets/rounakbanik/the-movies-dataset). I install/import [`kagglehub`](https://github.com/Kaggle/kagglehub) automatically, and use documented public mirrors if Kaggle access fails. I identify the data source for every CSV and check the archived IMDb mirror SHA-256 fingerprints. My original instructor ZIP remains preferred if available; I do not claim a public copy is identical. Downloading requires working internet access and may require Kaggle authorization.\n\n## Run the Notebook
+1. **Authentic-source gate:** both complete original IMDb files matched their previously documented SHA-256 fingerprints.
+2. **Embedding integrity gate:** all five compressed source snapshots were embedded in one `.ipynb`; each is verified before extraction.
+3. **Independent execution gate:** the notebook was executed in a clean temporary directory **without the source CSVs present**. All **13/13 Python code cells** ran without exceptions, and the resulting outputs were saved in that same notebook.
 
-### Google Colab
+**Results are derived from the documented embedded research subsets.** I distinguish their rating scales: IMDb cohort means are on 1–10; MovieLens individual ratings are on 0.5–5. Their raw MAE/RMSE figures do not measure equivalent prediction targets.
 
-1. [**Open my single notebook in Colab**](https://colab.research.google.com/github/SupaHumano/CAI2100C-Movie-Recommendation-Systems/blob/main/notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb).
-2. I choose **Runtime → Run all**. My notebook first finds attached original files and otherwise uses the official **Kagglehub** downloader to retrieve the two IMDb CSV files automatically. If Kaggle is blocked, I try a documented pinned IMDb GitHub mirror and check its SHA-256 hashes.
-3. For my optional MovieLens classroom extension, I use the teacher ZIP when present. Otherwise, I automatically request the three required public MovieLens CSVs from Kaggle, then a public mirror if necessary. I do **not** auto-download the large full `ratings.csv`; my model uses `ratings_small.csv`. If MovieLens access is blocked, the two IMDb tasks still complete.\n4. I verify the data summaries, recommendation tables, plots, metrics and provenance, then **save the executed notebook**.
+Read the exact [build provenance and checksums](docs/OFFLINE_PROVENANCE.json), [methodology](docs/METHODOLOGY.md) and [presentation guide](docs/PRESENTATION_GUIDE.md).
 
-### Kaggle Notebooks
+## Interactive educational lab
 
-Open [Kaggle Code](https://www.kaggle.com/code) and import [my single `.ipynb`](notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb). My notebook detects Kaggle's attached files or downloads the named CSVs using `kagglehub`. The original instructor ZIP is optional for the supplementary classroom section. I do not claim that I have published a separate Kaggle notebook URL.
+[**Open my live Movie Lab**](https://supahumano.github.io/CAI2100C-Movie-Recommendation-Systems/).
+
+The interactive website is an **independently labeled fictional teaching demonstration**. Its imaginary films and scores illustrate recommendation concepts and **are not the recorded IMDb/ MovieLens model outputs**. My executed `.ipynb` contains the authentic numerical evidence.
+
+## Run the exact notebook I submitted
+
+### Google Colab — no data-upload steps
+
+[**Open the single academic notebook in Google Colab**](https://colab.research.google.com/github/SupaHumano/CAI2100C-Movie-Recommendation-Systems/blob/main/notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb).
+
+1. Open the link.
+2. Choose **Runtime → Run all**.
+3. Review the authentic-snapshot integrity checks, recommendation tables, charts, MAE/RMSE evaluation and conclusions.
+4. To submit an updated execution, choose **File → Download → Download .ipynb**.
+
+**All five source snapshots are already stored in the notebook.** No external CSV, ZIP, Kaggle token or network retrieval is required for the data. Standard scientific Python packages must be available in the runtime (as they normally are in Colab).
+
+### Kaggle Code
+
+Import the **same notebook** into Kaggle Code and run it. No separate Kaggle dataset attachment is required because the research snapshots are embedded. I do not claim a separate Kaggle publication URL.
 
 ### Local Jupyter
 
@@ -102,47 +124,45 @@ python -m pip install -r requirements.txt
 jupyter notebook notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb
 ```
 
-Place both IMDb CSVs and the unmodified class ZIP in a directory the notebook searches. I do not redistribute the original external CSV files in this repository.
+## My presentation
 
-## Repository Structure
+I present the problem, the distinct datasets, the two final IMDb methods, my optional user-based classroom extension, authentic research snapshots, evaluation limitations and conclusions. My [oral presentation guide](docs/PRESENTATION_GUIDE.md) is consistent with my executable notebook and public website.
+
+## Repository structure
 
 ```text
 CAI2100C-Movie-Recommendation-Systems/
-├── README.md                   ← Academic project landing page
-├── index.html                  ← Interactive educational lab
+├── README.md
+├── index.html
 ├── notebooks/
-│   └── Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb  ← ONE active submission
-├── assets/
-│   ├── assignment8-cover.svg   ← Academic project cover
-│   ├── imdb-content-recommendations.png
-│   ├── imdb-cohort-correlation.png
-│   └── posters/               ← Fictional demo artwork
-├── data/                       ← Fictional web demonstration records
+│   └── Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb
 ├── docs/
-│   ├── PRESENTATION_GUIDE.md
+│   ├── OFFLINE_PROVENANCE.json
 │   ├── METHODOLOGY.md
+│   ├── PRESENTATION_GUIDE.md
 │   ├── ASSIGNMENT_REQUIREMENTS.md
-│   ├── IMDb_DATA_PROVENANCE.json
-│   ├── CLASSROOM_DATA_VERIFICATION.md
-│   └── archive/                ← Earlier classroom notebook preserved
-├── src/recommenders.py         ← Earlier reference implementation
+│   └── archive/  (previous classroom reference, not a second submission)
+├── assets/       (original academic cover, illustrations, demo assets)
+├── data/         (clearly fictional educational website data)
+├── src/          (supporting source reference)
 └── requirements.txt
 ```
 
-## References
+## Academic references
 
-- Beth Muturi, *Assignment 8: Movie Recommendation Systems*, Machine Learning Foundations, Miami Dade College.
-- [Stefano Leone, IMDb Extensive](https://www.kaggle.com/datasets/stefanoleone992/imdb-extensive-dataset).
-- [Rounak Banik, Movie Recommender Systems](https://www.kaggle.com/code/rounakbanik/movie-recommender-systems) — classroom-method reference, not my final IMDb dataset.
-- [scikit-learn: TF-IDF](https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html) and [Cosine similarity](https://scikit-learn.org/stable/modules/metrics.html#cosine-similarity).
-- [My methodology](docs/METHODOLOGY.md) · [My oral presentation guide](docs/PRESENTATION_GUIDE.md) · [Kaggle notebook references](docs/KAGGLE_NOTEBOOK_REFERENCES.md).
+- Professor Beth Muturi, *Assignment 8: Movie Recommendation Systems*, CAI2100C, Miami Dade College.
+- [Stefano Leone, IMDb Extensive dataset](https://www.kaggle.com/datasets/stefanoleone992/imdb-extensive-dataset).
+- [Pinned original-data mirror used for verification](https://github.com/Abkas/Machine-Learning-Approaches-for-Movie-Rating-Prediction-on-IMDb-Dataset/tree/509c026e32a6fa78cfc987a0aa39f47cc47fd243/Dataset).
+- [Rounak Banik, The Movies Dataset](https://www.kaggle.com/datasets/rounakbanik/the-movies-dataset).
+- [Rounak Banik, Movie Recommender Systems teaching reference](https://www.kaggle.com/code/rounakbanik/movie-recommender-systems).
+- [scikit-learn: TF-IDF vectorizer](https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html) and [cosine similarity](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.pairwise.cosine_similarity.html).
 
 ---
 
 <div align="center">
 
 **Juan Luna Santibanez**  
-Miami Dade College | Machine Learning Foundations | Professor Beth Muturi
+Miami Dade College · Machine Learning Foundations · Professor Beth Muturi
 
 *Represent. Compare. Evaluate. Explain.*
 
