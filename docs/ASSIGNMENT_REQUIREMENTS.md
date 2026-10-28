@@ -1,18 +1,14 @@
-# My Assignment 8 requirements and completion matrix
+# My Assignment 8 scope
 
-**Juan Luna Santibanez | CAI2100C | Professor Beth Muturi**
+**Juan Luna Santibanez · CAI2100C · Professor Beth Muturi**
 
-| Instructor's source | Academic obligation | Where I fulfill it |
-|---|---|---|
-| Notebook Task 1 | Build a Content-Based recommender using IMDb Extensive | Part I / IMDb TF-IDF + cosine similarity |
-| Notebook Task 2 | Build a Collaborative recommender using IMDb Extensive | Part I / age-gender cohort-average similarity, with explicit personalization limits |
-| Classroom lesson | Show and understand ratings-based movie recommendations | Part II / MovieLens/TMDB user-neighborhood exercise, **not Surprise SVD** |
-| Later email | “Please use both datasets,” without naming two sources | Two distinct, clearly attributed source collections in one file |
-| Scientific reasoning | Explain mathematical input and limits | Separate data provenance, independent metrics, baseline comparisons, conclusions |
-| Reproducibility | Run code and inspect outputs | Single **executed** self-contained notebook, five verified embedded source snapshots |
+| Printed task | Included code and output |
+|---|---|
+| Task 1: Content-Based movie recommendation using IMDb Extensive | Movie metadata → TF-IDF → cosine similarity → recommendation table and plot |
+| Task 2: Collaborative movie recommendation using IMDb Extensive | Cohort average-rating patterns → Pearson similarity → held-out MAE/RMSE → chart and baseline |
 
-**My canonical submission:** [Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb](../notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb).
+I use the two **IMDb CSV research samples included within my notebook**, both containing 3,000 authentic source rows. The notebook works without separate CSVs in Google Colab, Kaggle Code and ordinary Jupyter.
 
-I don't pretend that my selected **3,000 IMDb titles** are the complete 85,855-film dataset. I don't claim MovieLens public source files are an exact copy of the teacher ZIP. I don't confuse cohort averages with individual ratings or present the fictional website as empirical evidence.
+The instructor's classroom material includes a MovieLens/TMDB demonstration; I do not treat that demonstration as an additional third assignment task in this simplified submission. My IMDb cohort-mean method is clearly identified as an **approximation of collaborative rating-pattern reasoning**, not classical individual-user CF.
 
-I verified the full original IMDb CSV checksums before building the offline research snapshots. I then ran all **13 executable cells**, with those embedded genuine source snapshots and no external data files. The notebook contains all resulting output figures, metrics, analysis and references. See [recorded provenance](OFFLINE_PROVENANCE.json).
+**Single submission:** [Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb](../notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb)
