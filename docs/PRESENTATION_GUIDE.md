@@ -1,59 +1,36 @@
-# Oral presentation guide
+# My oral presentation guide — Assignment 8
 
 **Juan Luna Santibanez | CAI2100C | Professor Beth Muturi**
 
-## What problem did you solve?
+## What problem did I solve?
+I designed and tested two movie recommendation approaches for the IMDb Extensive tasks and a separately labeled classroom extension using MovieLens/TMDB.
 
-I built and ran two movie recommendation approaches using IMDb Extensive movie and ratings files. The first compares movie content, while the second looks for patterns in audience ratings.
+## What did the final assignment require?
+I read two final tasks in my instructor's notebook: **Content-Based Filtering** and **Collaborative Filtering**, both referencing IMDb Extensive. In a follow-up email my instructor wrote “Please use both datasets,” so I also included the MovieLens/TMDB classroom example as a separate extension. I did not treat the two sources as one dataset.
 
-## What is a recommendation system?
-
-A recommendation system helps someone discover items that may be relevant to their interests. In my assignment, those items are movies.
-
-## What are the model's inputs?
-
-For content-based filtering, I use descriptions, genres, directors, and actors. For the second approach, I use average ratings and vote counts for different IMDb audience cohorts.
+## Which data did I use?
+For IMDb I use `IMDb movies.csv` and `IMDb ratings.csv`. For my classroom extension I use `movies_metadata.csv`, `links_small.csv`, and `ratings_small.csv`; I inspect only the first 20,000 rows of the large `ratings.csv`.
 
 ## What is content-based filtering?
+I compare movie metadata. My TF-IDF vectorizer turns movie text into numerical features, and cosine similarity finds related movie titles. Similar text does not guarantee that a particular viewer will enjoy a film.
 
-It compares characteristics of movies. After choosing a title, I look for other films that share similar information, such as genres or descriptions.
+## What does collaborative filtering mean?
+I estimate ratings from shared rating patterns. My MovieLens extension uses individual user–movie ratings and positive similarities among nearby users. My IMDb task has **only aggregate averages by six audience cohorts**; I estimate group means, not personalized viewer scores.
 
-## What does TF-IDF mean?
+## Did I use the exact Surprise/SVD model from the classroom example?
+No. I used a user-neighborhood method for the MovieLens extension, and a cohort correlation method for IMDb. I explain both algorithms honestly and cite the classroom reference instead of claiming that my code reproduces Surprise/SVD.
 
-TF-IDF stands for Term Frequency–Inverse Document Frequency. It turns words into numerical features and gives more weight to terms that help distinguish one description from others.
+## How did I evaluate my methods?
+I split MovieLens ratings into training and test sets with a fixed random seed; I report coverage, MAE, RMSE, and a training-user-mean baseline. For IMDb I withhold observed cohort averages, estimate them from the remaining cohort matrix, and compare MAE/RMSE to a training-group-mean baseline. I never directly compare error magnitudes across their different rating scales.
 
-## What does cosine similarity measure?
+## What have I verified on this revision?
+I ran the unified notebook twice in a clean Jupyter kernel with **synthetic test fixtures**, without Python exceptions. That is a software smoke test, not a claim of fresh measurement on genuine course data. Before final Canvas submission I must rerun the unified file with authentic CSVs and save its outputs.
 
-It measures similarity between two numerical representations. A higher score means the movies are more alike according to the features I selected. It does not guarantee that a particular person will enjoy both films.
+## What is on the website?
+I built a visual educational demo that uses fictional movie titles and scores. I do not present those numbers as scientific IMDb results.
 
-## What is collaborative filtering?
+## What did I learn?
+Content-based systems compare item characteristics, whereas collaborative systems compare rating patterns. I learned why raw individual ratings and cohort-average statistics support different levels of personalization.
 
-It uses patterns in ratings to estimate what may be relevant. The idea is that similar rating patterns can contain useful information beyond a movie's description.
-
-## What is the difference between individual ratings and cohort averages?
-
-An individual rating records one person's score for a movie. A cohort average combines many ratings within an audience category. The IMDb Extensive file provides the second kind of information.
-
-## Can this model predict a particular person's rating?
-
-No. With this dataset, I can estimate patterns in audience-cohort averages, but I cannot identify what a specific viewer would prefer. I make that limitation explicit.
-
-## How are the two recommendation methods different?
-
-Content-based filtering compares what movies are about. The collaborative approach compares available rating patterns. They work with different data and can lead to different recommendations.
-
-## Why is MovieLens mentioned in the course notebook?
-
-MovieLens is used in the classroom example because it includes viewer-to-movie ratings. The final Assignment 8 tasks point to IMDb Extensive, so I keep the datasets separate.
-
-## How did you check the results?
-
-I checked the input columns, verified the similarity calculations, and tested held-out cohort-average predictions. I saved the computed recommendation tables, a content-based chart, a cohort-similarity chart, and evaluation metrics in the notebook.
-
-## Why does the interactive website show fictional titles?
-
-The website is a visual example of how the two approaches work. I label its titles and scores as fictional. Actual IMDb results, with tables and charts, are saved in the separate Python notebook.
-
-## Short conclusion
-
-Content-based filtering finds movies with similar information, while collaborative filtering uses rating patterns. This assignment helped me understand why the available data matters and why recommendation results need to be interpreted carefully.
+## Closing statement
+My work is organized as **one assignment notebook**, with two IMDb tasks, a separate MovieLens classroom extension, evaluation, and documented limitations. I can explain the calculations, their input sources and their limits in my own words.
