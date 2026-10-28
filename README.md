@@ -6,7 +6,7 @@ Miami Dade College | CAI2100C-2267-6908 | Machine Learning Foundations
 
 I developed **one Jupyter notebook** for my Assignment 8. I complete the two final IMDb Extensive tasks and include my separately labeled MovieLens/TMDB classroom extension, reflecting the follow-up instruction to consider both datasets. I keep all rating scales, input tables, and conclusions separate.
 
-**[Open my notebook in Google Colab (review branch)](https://colab.research.google.com/github/SupaHumano/CAI2100C-Movie-Recommendation-Systems/blob/assignment8-one-notebook-20261027/notebooks/Assignment_8_Movie_Recommendation_Systems.ipynb)** · **[Jupyter notebook (review branch)](https://github.com/SupaHumano/CAI2100C-Movie-Recommendation-Systems/blob/assignment8-one-notebook-20261027/notebooks/Assignment_8_Movie_Recommendation_Systems.ipynb)** · **[IMDb Extensive on Kaggle](https://www.kaggle.com/datasets/stefanoleone992/imdb-extensive-dataset)** · **[Interactive teaching demo](https://supahumano.github.io/CAI2100C-Movie-Recommendation-Systems/)**
+**[Open my notebook in Google Colab](https://colab.research.google.com/github/SupaHumano/CAI2100C-Movie-Recommendation-Systems/blob/main/notebooks/Assignment_8_Movie_Recommendation_Systems.ipynb)** · **[Jupyter notebook](https://github.com/SupaHumano/CAI2100C-Movie-Recommendation-Systems/blob/main/notebooks/Assignment_8_Movie_Recommendation_Systems.ipynb)** · **[IMDb Extensive on Kaggle](https://www.kaggle.com/datasets/stefanoleone992/imdb-extensive-dataset)** · **[Interactive teaching demo](https://supahumano.github.io/CAI2100C-Movie-Recommendation-Systems/)**
 
 ## My final assignment tasks
 
@@ -31,13 +31,13 @@ My extension responds to the follow-up phrase “Please use both datasets,” wh
 3. Run all cells. Both sources are required for a full notebook run. I do not silently fabricate results when inputs are absent.
 4. Save the **executed** notebook, review all plots and output cells, and use the appropriate Canvas submission option.
 
-**Quality evidence:** the unified notebook passed Jupyter schema/syntax validation and two full clean-kernel executions with **clearly labeled synthetic fixtures** (12/12 code cells in each run, deterministic). This does **not** establish a fresh run on the authentic course CSVs. The earlier IMDb-only notebook on `main` stored historic real-data outputs (3,000 selected films; held-out cohort MAE 0.1836, RMSE 0.2477), but the unified notebook on this review branch has no cached academic outputs until rerun.
+**Quality evidence:** the unified notebook passed Jupyter schema/syntax validation and two full clean-kernel executions with **clearly labeled synthetic fixtures** (12/12 code cells in each run, deterministic). This does **not** establish a fresh run on the authentic course CSVs. The earlier IMDb-only notebook version stored historic real-data outputs (3,000 selected films; held-out cohort MAE 0.1836, RMSE 0.2477), but the unified notebook on this review branch has no cached academic outputs until rerun.
 
 I retain the original [IMDb dataset provenance](docs/IMDb_DATA_PROVENANCE.json) and [classroom verification report](docs/CLASSROOM_DATA_VERIFICATION.md) as **historical evidence**; they are not independently reproduced measurements of this revised notebook.
 
 ## My presentation and interpretation
 
-I use my [oral presentation guide](docs/PRESENTATION_GUIDE.md), [methodology](docs/METHODOLOGY.md), and [requirements mapping](docs/ASSIGNMENT_REQUIREMENTS.md) to explain what I did and what I cannot infer. The [interactive demonstration](https://supahumano.github.io/CAI2100C-Movie-Recommendation-Systems/) contains **fictional titles and scores**, not measured IMDb recommendations.
+I archive my earlier classroom verification notebook at [docs/archive/Assignment_8_Classroom_Data_Verification.ipynb](docs/archive/Assignment_8_Classroom_Data_Verification.ipynb), rather than promoting two active submission notebooks. My single deliverable stays at [notebooks/Assignment_8_Movie_Recommendation_Systems.ipynb](notebooks/Assignment_8_Movie_Recommendation_Systems.ipynb).\n\nI use my [oral presentation guide](docs/PRESENTATION_GUIDE.md), [methodology](docs/METHODOLOGY.md), and [requirements mapping](docs/ASSIGNMENT_REQUIREMENTS.md) to explain what I did and what I cannot infer. The [interactive demonstration](https://supahumano.github.io/CAI2100C-Movie-Recommendation-Systems/) contains **fictional titles and scores**, not measured IMDb recommendations.
 
 ## References
 
