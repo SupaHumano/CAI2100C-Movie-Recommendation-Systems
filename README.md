@@ -41,7 +41,7 @@ I use **two ordinary IMDb CSV files** in `data/`:
 - [`IMDb movies.csv`](data/IMDb%20movies.csv) — the complete original IMDb Extensive movie file (85,855 records).
 - [`IMDb ratings.csv`](data/IMDb%20ratings.csv) — the complete original IMDb Extensive ratings file (85,855 records).
 
-I use the **full two original IMDb CSV files**; I do not apply a 3,000-title selection or a vote-count cutoff. Task 2 evaluates available cohort ratings with a documented minimum-vote threshold for individual observations.
+I use **both complete original IMDb CSV files** across the full catalogue, without a popularity-based title cutoff. Task 2 evaluates available cohort ratings with a documented minimum-vote threshold for individual observations.
 
 The notebook's loading cell mirrors Assignment 7: it first checks local project folders. If I open just the notebook in Google Colab, it downloads **only missing CSVs from the same public repository**. When I extract the provided ZIP, both CSVs are already there and the notebook can load them offline.
 
