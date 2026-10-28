@@ -1,0 +1,58 @@
+name: Assignment 8 final clean-run verification
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/a8-final-clean-run.yml']
+permissions:
+  contents: write
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install standard notebook dependencies
+        run: python -m pip install -q numpy pandas scipy scikit-learn matplotlib nbformat nbclient ipykernel
+      - name: Open the notebook alone and download complete missing CSV files from main
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from tempfile import TemporaryDirectory
+          import nbformat
+          from nbclient import NotebookClient
+          p=Path('notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb')
+          nb=nbformat.read(p,as_version=4)
+          assert sum(c.cell_type=='code' for c in nb.cells)==7
+          with TemporaryDirectory() as t:
+              assert not (Path(t)/'data').exists()
+              done=NotebookClient(nb,timeout=600,kernel_name='python3',allow_errors=False,
+                      resources={'metadata':{'path':t}}).execute()
+              names=('IMDb movies.csv','IMDb ratings.csv')
+              for name in names:
+                  datafile=Path(t)/'data'/name
+                  assert datafile.exists() and datafile.stat().st_size>16_000_000
+                  print('Fetched actual complete CSV from main:',name,datafile.stat().st_size,flush=True)
+          codes=[c for c in done.cells if c.cell_type=='code']
+          assert len(codes)==7 and all(c.execution_count is not None for c in codes)
+          assert not any(o.output_type=='error' for c in codes for o in c.outputs)
+          text='\n'.join(str(o) for c in codes for o in c.outputs)
+          assert '85855' in text and 'PASS' in text
+          print('PASS: notebook executed 7/7 in an empty directory using live downloads from the published repo',flush=True)
+          PY
+      - name: Remove merged review branch and self-clean this validation workflow
+        run: |
+          set -euo pipefail
+          test "$(gh api "repos/$GITHUB_REPOSITORY/pulls/7" --jq .merged)" = "true"
+          gh api --method DELETE "repos/$GITHUB_REPOSITORY/git/refs/heads/assignment8-full-original-imdb-20261027"
+          git config user.name "Academic repository maintenance"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/a8-final-clean-run.yml
+          git commit -m "Finalize complete original IMDb Assignment 8 on main"
+          git push origin HEAD:main
