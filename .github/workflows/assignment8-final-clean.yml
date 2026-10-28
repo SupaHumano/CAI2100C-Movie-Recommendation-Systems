@@ -1,0 +1,27 @@
+name: Assignment 8 remove merged temporary branch
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/assignment8-final-clean.yml']
+permissions:
+  contents: write
+jobs:
+  clean:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Remove only fully merged Assignment 8 review branch
+        run: |
+          test "$(gh api repos/$GITHUB_REPOSITORY/pulls/5 --jq '.merged')" = "true"
+          gh api --method DELETE "repos/$GITHUB_REPOSITORY/git/refs/heads/assignment8-two-tasks-simple-csv-20261027"
+      - name: Retire this temporary cleanup workflow
+        run: |
+          git config user.name "assignment8-cleanup[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/assignment8-final-clean.yml
+          git commit -m "Close completed Assignment 8 review; keep one main branch"
+          git push origin HEAD:main
