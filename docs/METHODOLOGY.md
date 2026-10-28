@@ -4,7 +4,7 @@
 
 ## My data
 
-I use `data/IMDb movies.csv` and `data/IMDb ratings.csv`. They contain **3,000 selected authentic IMDb Extensive film records** and their **3,000 corresponding demographic-rating rows**. The sample includes well-voted films and does not represent the complete IMDb catalogue.
+I use `data/IMDb movies.csv` and `data/IMDb ratings.csv`. They contain the **full original IMDb Extensive movie and ratings tables, with 85,855 records each**. I do not apply a fixed title sample or popularity-based selection. The cohort model uses observations meeting the stated 30-vote minimum, without shrinking the input catalogue.
 
 My notebook follows Assignment 7's simple loading pattern: it finds local CSV files first and retrieves them from the same GitHub repository only if missing. The dataset records are **not embedded in the Python source code**.
 
