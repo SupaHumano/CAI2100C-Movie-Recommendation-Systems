@@ -23,7 +23,7 @@
 
 I completed the two recommendation-system tasks in Professor Muturi's Assignment 8 using records from IMDb Extensive. My project follows the straightforward structure of my [Assignment 7 — K-Means Visualization](https://github.com/SupaHumano/CAI2100C-KMeans-Visualization): **one notebook for the analysis and a separate `data/` directory for CSV inputs**.
 
-My notebook contains the complete methods, explanations, charts, measured results and conclusions. It does **not** paste thousands of movie records inside Python cells.
+My notebook contains the two required methods, explanations, charts, measured results and conclusions. It does **not** paste thousands of movie records inside Python cells.
 
 ## The two assigned methods
 
@@ -38,10 +38,10 @@ My notebook contains the complete methods, explanations, charts, measured result
 
 I use **two ordinary IMDb CSV files** in `data/`:
 
-- [`IMDb movies.csv`](data/IMDb%20movies.csv) — 3,000 authentic selected movie records.
-- [`IMDb ratings.csv`](data/IMDb%20ratings.csv) — 3,000 corresponding cohort-rating records.
+- [`IMDb movies.csv`](data/IMDb%20movies.csv) — the complete original IMDb Extensive movie file (85,855 records).
+- [`IMDb ratings.csv`](data/IMDb%20ratings.csv) — the complete original IMDb Extensive ratings file (85,855 records).
 
-I selected these movies by vote count from the IMDb Extensive source. They are a **research sample rather than the entire IMDb catalogue**; my conclusions concern that sample.
+I use **both complete original IMDb CSV files** across the full catalogue, without a popularity-based title cutoff. Task 2 evaluates available cohort ratings with a documented minimum-vote threshold for individual observations.
 
 The notebook's loading cell mirrors Assignment 7: it first checks local project folders. If I open just the notebook in Google Colab, it downloads **only missing CSVs from the same public repository**. When I extract the provided ZIP, both CSVs are already there and the notebook can load them offline.
 

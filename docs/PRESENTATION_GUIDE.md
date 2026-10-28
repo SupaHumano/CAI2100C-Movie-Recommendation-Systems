@@ -4,7 +4,7 @@
 
 ## Introduction
 
-I built two movie recommendation approaches using an authentic selected IMDb Extensive research sample. My source dataset is stored in two separate CSV files, as in my Assignment 7 project. My notebook focuses on the actual algorithms, charts, experiments and conclusions.
+I built two movie recommendation approaches using the complete original IMDb Extensive source files. My source dataset is stored in two separate CSV files, as in my Assignment 7 project. My notebook focuses on the actual algorithms, charts, experiments and conclusions.
 
 ## Task 1 — Content-Based Filtering
 
@@ -16,7 +16,7 @@ I examine IMDb's available age/gender **aggregate rating patterns** using Pearso
 
 ## Data and scope
 
-I used 3,000 authentic selected IMDb films and 3,000 matching cohort-rating rows. The research sample favors highly voted movies. I do not claim to have processed every film in IMDb Extensive.
+I used the two complete original IMDb Extensive CSV files: 85,855 movie records and 85,855 rating records. The content model covers the full catalogue; the cohort-rating model uses valid observed group averages meeting its minimum-vote criterion.
 
 ## Running the project
 
