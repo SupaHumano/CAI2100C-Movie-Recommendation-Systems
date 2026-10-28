@@ -1,14 +1,17 @@
-# My Assignment 8 scope
+# Assignment 8 — Requirements
 
-**Juan Luna Santibanez · CAI2100C · Professor Beth Muturi**
+**Juan Luna Santibanez**  
+Miami Dade College · CAI2100C · Professor Beth Muturi
 
-| Printed task | Included code and output |
+The two tasks printed in my Assignment 8 notebook are:
+
+| Task | My work |
 |---|---|
-| Task 1: Content-Based movie recommendation using IMDb Extensive | Movie metadata → TF-IDF → cosine similarity → recommendation table and plot |
-| Task 2: Collaborative movie recommendation using IMDb Extensive | Cohort average-rating patterns → Pearson similarity → held-out MAE/RMSE → chart and baseline |
+| **1. Content-Based Recommendation System** | IMDb movie metadata → TF-IDF → cosine similarity → 10 recommendations and a chart |
+| **2. Collaborative Recommendation System** | IMDb six demographic-rating cohorts → Pearson similarity → held-out predictions with MAE/RMSE and baseline |
 
-I use the two **IMDb CSV research samples included within my notebook**, both containing 3,000 authentic source rows. The notebook works without separate CSVs in Google Colab, Kaggle Code and ordinary Jupyter.
+I use two ordinary CSV files from my selected IMDb Extensive research sample, stored in `data/`. My Jupyter notebook reads them locally or downloads them from this repository in Google Colab, following the same workflow as Assignment 7.
 
-The instructor's classroom material includes a MovieLens/TMDB demonstration; I do not treat that demonstration as an additional third assignment task in this simplified submission. My IMDb cohort-mean method is clearly identified as an **approximation of collaborative rating-pattern reasoning**, not classical individual-user CF.
+**Limitation:** the IMDb Extensive cohort data do not identify individual users. My Collaborative Filtering implementation is therefore a **group-average approximation** rather than personalized user-based Collaborative Filtering or SVD.
 
-**Single submission:** [Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb](../notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb)
+**Submission:** [My Assignment 8 notebook](../notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb).
