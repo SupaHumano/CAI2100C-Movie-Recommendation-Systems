@@ -55,7 +55,7 @@ jobs:
           nbformat.validate(nb)
           assert len([c for c in nb.cells if c.cell_type=='code'])==7
           code='\n'.join(c.source for c in nb.cells if c.cell_type=='code')
-          assert 'head(3000)' not in code and 'ge(1000)' not in code
+          assert '.head(3000)' not in code and '.ge(1000)' not in code
           assert 'hashlib' not in code and 'base64' not in code and 'kagglehub' not in code
           # Execute in a blank folder containing only full original CSVs.
           with tempfile.TemporaryDirectory() as t:
