@@ -50,8 +50,11 @@ These results are measured from the original classroom CSVs. They are **not** th
 
 ## Reproducibility
 
-The companion [classroom experiment notebook](../notebooks/Assignment_8_Classroom_Data_Verification.ipynb) reads the original ZIP provided by the instructor and reports the model results. Download or upload the ZIP into the Colab or Jupyter runtime. The repository does not redistribute the 183 MB instructor ZIP or the original movie datasets.
+The companion [classroom experiment notebook](archive/Assignment_8_Classroom_Data_Verification.ipynb) reads the original ZIP provided by the instructor and reports the model results. Download or upload the ZIP into the Colab or Jupyter runtime. The repository does not redistribute the 183 MB instructor ZIP or the original movie datasets.
 
 ## Limits
 
 This is supplementary verification using the exact class files. The final tasks of the professor's notebook still point to [IMDb Extensive on Kaggle](https://www.kaggle.com/datasets/stefanoleone992/imdb-extensive-dataset). That separate dataset was **not present in the instructor ZIP**, and I have not represented these MovieLens results as IMDb Extensive results.
+
+
+**Current repository organization:** I preserve the earlier separate classroom notebook in my documentation archive; my only active submission notebook is [Assignment 8 unified](../notebooks/Assignment_8_Movie_Recommendation_Systems.ipynb). The figures above are historical, not fresh results from the new unified file.
