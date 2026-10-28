@@ -1,0 +1,70 @@
+name: Assignment 8 verify authentic offline snapshot (temporary)
+on:
+  push:
+    branches: [assignment8-verified-offline-integrated-20261027]
+    paths:
+      - '.github/workflows/assignment8-one-off-bake.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build-and-verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - name: Checkout staged assignment
+        uses: actions/checkout@v4
+      - name: Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install scientific notebook packages
+        run: python -m pip install -q numpy pandas scipy scikit-learn matplotlib nbformat nbclient ipykernel
+      - name: Download five original dataset CSV files
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from urllib.request import Request, urlopen
+          from tools.build_verified_offline import SOURCE
+          data=Path('authentic_source');data.mkdir(exist_ok=True)
+          for name,url in SOURCE.items():
+              target=data/name
+              print('Downloading original source:',name,url,flush=True)
+              request=Request(url,headers={'User-Agent':'Academic-Notebook-Validator/1.0'})
+              with urlopen(request,timeout=180) as resp, open(target,'wb') as output:
+                  while True:
+                      chunk=resp.read(1<<20)
+                      if not chunk:break
+                      output.write(chunk)
+              assert target.stat().st_size>1000, name
+              print('Original bytes:',target.stat().st_size,flush=True)
+          PY
+      - name: Build complete self-contained notebook from authentic verified sources
+        run: |
+          python tools/build_verified_offline.py authentic_source notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb AUTHENTIC
+      - name: Re-run every cell offline with no source files
+        run: |
+          python - <<'PY'
+          import tempfile,nbformat,json,hashlib
+          from pathlib import Path
+          from nbclient import NotebookClient
+          p=Path('notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb')
+          nb=nbformat.read(p,as_version=4)
+          assert nb.metadata['a8_provenance']['source_type']=='Authentic pinned Kaggle-data mirror research subsets'
+          with tempfile.TemporaryDirectory() as wd:
+              executed=NotebookClient(nb,timeout=480,kernel_name='python3',resources={'metadata':{'path':wd}},allow_errors=False).execute()
+          assert sum(c.cell_type=='code' for c in executed.cells)==13
+          assert all(c.execution_count is not None for c in executed.cells if c.cell_type=='code')
+          assert not [o for c in executed.cells if c.cell_type=='code' for o in c.outputs if o.output_type=='error']
+          nbformat.write(executed,p)
+          provenance=executed.metadata['a8_provenance']
+          Path('docs/OFFLINE_PROVENANCE.json').write_text(json.dumps(provenance,indent=2,ensure_ascii=False))
+          print('SUCCESS: 13/13 executed with 5 authentic embedded source snapshots. notebook bytes',p.stat().st_size)
+          PY
+      - name: Commit verified notebook only if all academic gates pass
+        run: |
+          git config user.name "assignment8-validation[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb docs/OFFLINE_PROVENANCE.json
+          git commit -m "Assignment 8 verified offline notebook with five authentic research snapshots"
+          git push origin HEAD:assignment8-verified-offline-integrated-20261027
