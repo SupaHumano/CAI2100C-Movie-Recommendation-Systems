@@ -5,80 +5,116 @@
 ### CAI2100C · Machine Learning Foundations
 
 **Juan Luna Santibanez**  
-**Miami Dade College | Professor Beth Muturi**
+**Miami Dade College · Professor Beth Muturi**
 
 ![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
-![Jupyter](https://img.shields.io/badge/Jupyter-One_Notebook-F37626?logo=jupyter&logoColor=white)
-![scikit-learn](https://img.shields.io/badge/scikit--learn-Recommenders-F7931E?logo=scikitlearn&logoColor=white)
-![Status](https://img.shields.io/badge/Status-Executed_on_real_IMDb_sample-25805C)
+![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-F37626?logo=jupyter&logoColor=white)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-Recommendation_Systems-F7931E?logo=scikitlearn&logoColor=white)
 
-**Two tasks. One IMDb source. One notebook.**
+**Two assignment tasks. Two IMDb CSV files. One Jupyter notebook.**
 
-[**Google Colab**](https://colab.research.google.com/github/SupaHumano/CAI2100C-Movie-Recommendation-Systems/blob/main/notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb) · [**Download Notebook**](notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb) · [**IMDb Extensive Dataset**](https://www.kaggle.com/datasets/stefanoleone992/imdb-extensive-dataset) · [**Interactive Educational Demo**](https://supahumano.github.io/CAI2100C-Movie-Recommendation-Systems/)
+[**Open in Google Colab**](https://colab.research.google.com/github/SupaHumano/CAI2100C-Movie-Recommendation-Systems/blob/main/notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb) · [**My Jupyter notebook**](notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb) · [**IMDb dataset**](https://www.kaggle.com/datasets/stefanoleone992/imdb-extensive-dataset) · [**Interactive learning lab**](https://supahumano.github.io/CAI2100C-Movie-Recommendation-Systems/)
 
 </div>
 
 ![Assignment 8 academic cover](assets/assignment8-cover.svg)
 
----
+## Project overview
 
-## My assignment
+I completed the two recommendation-system tasks in Professor Muturi's Assignment 8 using records from IMDb Extensive. My project follows the straightforward structure of my [Assignment 7 — K-Means Visualization](https://github.com/SupaHumano/CAI2100C-KMeans-Visualization): **one notebook for the analysis and a separate `data/` directory for CSV inputs**.
 
-I implemented the **two tasks stated at the end of Professor Beth Muturi's Assignment 8 notebook**, both using IMDb Extensive.
+My notebook contains the complete methods, explanations, charts, measured results and conclusions. It does **not** paste thousands of movie records inside Python cells.
 
-| Assigned task | My implementation | Evidence in my notebook |
+## The two assigned methods
+
+| Task | My implementation | Result |
 |---|---|---|
-| **Task 1 — Content-Based Filtering** | TF-IDF on movie descriptions, genres, directors and actors; cosine similarity | Ranked recommendations and similarity chart |
-| **Task 2 — Collaborative Filtering approach** | Pearson correlation between six IMDb demographic rating cohorts | Held-out cohort-average MAE, RMSE, training-group-mean baseline and correlation chart |
+| **Task 1 — Content-Based Filtering** | Movie descriptions, genres, directors and actors; TF-IDF + cosine similarity | A ranked recommendation table and similarity chart |
+| **Task 2 — Collaborative Filtering approach** | Pearson correlation between six IMDb audience-rating cohorts, with holdout evaluation | Group-average predictions, MAE, RMSE and a training-mean baseline |
 
-**Important methodological limitation:** IMDb Extensive provides **aggregate cohort averages** rather than individual user histories. My second model estimates cohort averages; it is not personalized user-based SVD. I explain the distinction instead of claiming results unsupported by the data.
+**Scientific limit:** the public IMDb Extensive rating file provides demographic *group averages*, not individual-user histories. My second approach examines collaborative rating patterns **at cohort level**; I do not claim to have reconstructed personal ratings or implemented user-level SVD.
 
-## Data — already inside the notebook
+## Data and reproducibility
 
-I embedded **two authentic IMDb research CSV samples**, each with 3,000 rows, **as ordinary human-readable CSV text** in a folded notebook cell:
+I use **two ordinary IMDb CSV files** in `data/`:
 
-- `IMDb movies.csv`: 3,000 selected film records
-- `IMDb ratings.csv`: 3,000 corresponding records of age/gender audience-rating statistics
+- [`IMDb movies.csv`](data/IMDb%20movies.csv) — 3,000 authentic selected movie records.
+- [`IMDb ratings.csv`](data/IMDb%20ratings.csv) — 3,000 corresponding cohort-rating records.
 
-I selected these films using a reproducible high-vote criterion. They represent a **selected sample, not every film in IMDb Extensive**. I do not state or imply that I trained on all original IMDb titles.
+I selected these movies by vote count from the IMDb Extensive source. They are a **research sample rather than the entire IMDb catalogue**; my conclusions concern that sample.
 
-The notebook loads the included CSV text using **Pandas and `StringIO`**; it does not install downloaders, request credentials, fetch data from the Internet or require separate files. **No compressed payload, encoded dataset block or integrity-hash workflow is used.** The analysis code remains visible, and the data cell can be expanded in any ordinary notebook editor.
+The notebook's loading cell mirrors Assignment 7: it first checks local project folders. If I open just the notebook in Google Colab, it downloads **only missing CSVs from the same public repository**. When I extract the provided ZIP, both CSVs are already there and the notebook can load them offline.
 
-## Run my single notebook
+```python
+movies_path = locate_csv("IMDb movies.csv")
+ratings_path = locate_csv("IMDb ratings.csv")
+
+imdb_movies_raw = pd.read_csv(movies_path)
+imdb_ratings_raw = pd.read_csv(ratings_path)
+```
+
+## How to run
 
 ### Google Colab
 
-1. [Open my notebook directly in Colab](https://colab.research.google.com/github/SupaHumano/CAI2100C-Movie-Recommendation-Systems/blob/main/notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb).
-2. Select **Runtime → Run all**.
-3. Check the two recommendation tables, charts, cohort correlation and held-out metrics.
-4. If needed, download the executed notebook as `.ipynb`.
+1. [Open my Assignment 8 notebook](https://colab.research.google.com/github/SupaHumano/CAI2100C-Movie-Recommendation-Systems/blob/main/notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb).
+2. Choose **Runtime → Run all**. The missing CSV files are retrieved from this repository automatically.
+3. Review the recommendations, cohort evaluation, plots and conclusions.
 
-### Kaggle Code or local Jupyter
+### Local Jupyter / VS Code
 
-Import the **same notebook**. The source data are included, so no dataset attachment is required. For local Jupyter install `requirements.txt` and open the file:
+1. Download the ZIP containing `notebooks/` and `data/`, or clone the repository.
+2. Open `notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb`.
+3. Execute the cells. No Internet connection is needed for data access when the two CSVs are present.
 
 ```bash
 python -m pip install -r requirements.txt
 jupyter notebook notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb
 ```
 
-## Visual presentation
+### Kaggle notebooks
 
-![My notebook methods](assets/assignment8-lab-preview.svg)
+Import the same `.ipynb` into Kaggle Code and provide the CSVs as notebook input files, or enable Internet so the loader can obtain them from the repository. I do not claim to have published a separate Kaggle notebook.
 
-I maintain a separate [interactive educational webpage](https://supahumano.github.io/CAI2100C-Movie-Recommendation-Systems/) with clearly **fictional film titles and scores** to explain how content and rating-pattern recommendation approaches differ. The website is **not** the numerical source for my IMDb model results.
+## What I learned
 
-## My oral presentation
+Content-Based Filtering recommends related films based on item characteristics. The cohort-based rating approach examines common patterns in aggregate audience ratings. These methods answer different questions, and I evaluate the latter on held-out group means without treating group averages as individual preferences.
 
-My [oral presentation guide](docs/PRESENTATION_GUIDE.md) explains the two models, included CSVs, evaluation methods, limitations, and conclusions. [Methodology](docs/METHODOLOGY.md) and [requirements map](docs/ASSIGNMENT_REQUIREMENTS.md) document the same two-task scope.
+My [interactive website](https://supahumano.github.io/CAI2100C-Movie-Recommendation-Systems/) is a **separate fictional teaching illustration**, not the source of the IMDb research measurements.
 
-## Sources
+## My repository
+
+```text
+CAI2100C-Movie-Recommendation-Systems/
+├── README.md
+├── index.html
+├── notebooks/
+│   └── Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb
+├── data/
+│   ├── IMDb movies.csv
+│   └── IMDb ratings.csv
+├── docs/
+│   ├── ASSIGNMENT_REQUIREMENTS.md
+│   ├── METHODOLOGY.md
+│   └── PRESENTATION_GUIDE.md
+├── assets/
+└── requirements.txt
+```
+
+*The website also has separate fictional demo assets. They are not used for the academic models.*
+
+## Academic references
 
 - Beth Muturi, *CAI2100C Assignment 8 — Movie Recommendation Systems*, Miami Dade College.
-- [Stefano Leone — IMDb Extensive Dataset](https://www.kaggle.com/datasets/stefanoleone992/imdb-extensive-dataset).
-- [Rounak Banik — Movie Recommender Systems](https://www.kaggle.com/code/rounakbanik/movie-recommender-systems) (classroom method reference).
-- [scikit-learn — TF-IDF](https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html).
+- [Stefano Leone, IMDb Extensive dataset](https://www.kaggle.com/datasets/stefanoleone992/imdb-extensive-dataset).
+- [scikit-learn, TF-IDF feature extraction](https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html).
+- [scikit-learn, pairwise cosine similarity](https://scikit-learn.org/stable/modules/metrics.html#cosine-similarity).
 
 ---
 
-<div align="center">**Juan Luna Santibanez** | Miami Dade College | CAI2100C</div>
+<div align="center">
+
+**Juan Luna Santibanez**  
+Miami Dade College · CAI2100C · Professor Beth Muturi
+
+</div>
