@@ -1,19 +1,17 @@
-# Assignment 8 | Movie Recommendation Systems
+# My Assignment 8 requirements map
 
-**Juan Luna Santibanez**  
-Miami Dade College | CAI2100C-2267-6908 | Machine Learning Foundations  
-**Professor Beth Muturi**
+**Juan Luna Santibanez | CAI2100C | Professor Beth Muturi**
 
-## Goal
+I map the instructor's classroom notebook and email to my unified submission:
 
-Build and compare a content-based recommendation system and a collaborative recommendation system using the IMDb Extensive Dataset indicated in the Assignment 8 notebook.
+| Source | Requirement or context | My implementation |
+|---|---|---|
+| Instructor notebook — Task 1 | Build Content-Based Filtering using IMDb Extensive | Part I, Task 1: TF-IDF and cosine similarity |
+| Instructor notebook — Task 2 | Build Collaborative Filtering using IMDb Extensive | Part I, Task 2: correlation of cohort-average ratings; not individual SVD |
+| Instructor's prior lesson | MovieLens/TMDB and Surprise/SVD demonstration | Part II: labeled classroom extension; user-neighborhood method (not SVD) |
+| Instructor's email | “Please use both datasets” without explicit names | IMDb Extensive main tasks plus separate MovieLens/TMDB extension |
+| Scientific evaluation | Explain results and limitations | Training-only baselines, held-out MAE/RMSE and provenance |
 
-## Task 1: Content-Based
+I maintain both data sources independently. IMDb scores are on a 1–10 scale; MovieLens scores are on a 0.5–5 scale. I do not pass classroom data off as IMDb, nor describe demographic group means as individual preferences.
 
-Use IMDb film descriptions, genres, actors and directors to compute similarity with TF-IDF and cosine similarity.
-
-## Task 2: Collaborative
-
-Explore collaborative recommendation patterns using the IMDb ratings file. This file contains average scores by age/gender cohort instead of individual user rating histories. The method is explicitly a cohort-level approximation; it does not predict specific individual preferences.
-
-The classroom notebook demonstrates MovieLens and Surprise SVD with a different dataset. The final assignment tasks reference [IMDb Extensive](https://www.kaggle.com/datasets/stefanoleone992/imdb-extensive-dataset), and the [Kaggle notebook examples](KAGGLE_NOTEBOOK_REFERENCES.md) help explain the methods.
+My unified notebook is the deliverable: [Assignment 8](../notebooks/Assignment_8_Movie_Recommendation_Systems.ipynb). I execute the notebook with authentic course datasets before submitting it as complete.
