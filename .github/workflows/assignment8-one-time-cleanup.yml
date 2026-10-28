@@ -1,0 +1,72 @@
+name: Assignment 8 one-time repository cleanup
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/assignment8-one-time-cleanup.yml']
+permissions:
+  contents: write
+  actions: write
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Verify four change sets are merged
+        env:
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          for pr in 1 2 3 4; do
+            merged=$(gh api "repos/$REPO/pulls/$pr" --jq '.merged')
+            test "$merged" = "true" || { echo "PR $pr is not merged, abort cleanup"; exit 1; }
+          done
+          test "$(git branch --show-current)" = "main"
+      - name: Remove only four merged temporary branches
+        env:
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          for branch in             assignment8-one-notebook-20261027             assignment8-academic-visual-unification-20261027             assignment8-automatic-datasets-juan-luna-20261027             assignment8-verified-offline-integrated-20261027; do
+            test "$branch" != "main"
+            gh api --method DELETE "repos/$REPO/git/refs/heads/$branch"
+            echo "Removed completed development branch: $branch"
+          done
+      - name: Remove older completed run records while preserving current Pages success
+        env:
+          REPO: ${{ github.repository }}
+        run: |
+          set -uo pipefail
+          KEEP_PAGES=40618022884
+          gh api "repos/$REPO/actions/runs?per_page=100" --jq '.workflow_runs[].id' | while read -r id; do
+            if [ "$id" = "$KEEP_PAGES" ] || [ "$id" = "$GITHUB_RUN_ID" ]; then continue; fi
+            gh api --method DELETE "repos/$REPO/actions/runs/$id" && echo "Removed old run $id" || echo "Could not delete run $id (permission/status)"
+          done
+      - name: Remove this temporary workflow and preserve final record
+        run: |
+          set -euo pipefail
+          cat > docs/GITHUB_CLEANUP_REPORT.md <<'EOF'
+          # Assignment 8 — Repository consolidation
+          
+          I consolidated the final submission into one canonical Jupyter notebook on `main`.
+          The four merged development branches were removed by the one-time cleanup job after verifying that PRs #1–#4 were merged.
+          The temporary data builder workflow and builder source are absent from `main`.
+          The only long-term deployment workflow is GitHub Pages.
+          
+          **Final academic notebook:** [Assignment 8 — Juan Luna Santibanez](../notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb).
+          **Immutable research snapshot hashes:** [OFFLINE_PROVENANCE.json](OFFLINE_PROVENANCE.json).
+          **Authentic dataset verification:** original IMDb full-file hashes verified in GitHub cloud runner; all 13 notebook code cells executed without external CSV files.
+          
+          Historical Git commits are preserved to maintain an auditable academic development trail; the last release changes were squash-merged.
+          EOF
+          git rm .github/workflows/assignment8-one-time-cleanup.yml
+          git add docs/GITHUB_CLEANUP_REPORT.md
+          git config user.name "assignment8-cleanup[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Finalize Assignment 8: only main and one canonical academic notebook"
+          git push origin HEAD:main
