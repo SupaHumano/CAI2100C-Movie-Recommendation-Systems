@@ -1,0 +1,112 @@
+name: Assignment 8 full original IMDb validation
+on:
+  push:
+    branches: [assignment8-full-original-imdb-20261027]
+    paths: ['.github/workflows/a8-full-original-onetime.yml']
+permissions:
+  contents: write
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: assignment8-full-original-imdb-20261027
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install standard scientific notebook packages
+        run: python -m pip install -q numpy pandas scipy scikit-learn matplotlib nbformat nbclient ipykernel
+      - name: Replace reduced samples with the two complete original IMDb CSVs
+        run: |
+          python - <<'PY'
+          from urllib.request import urlopen,Request
+          from pathlib import Path
+          import csv
+          root='https://raw.githubusercontent.com/Abkas/Machine-Learning-Approaches-for-Movie-Rating-Prediction-on-IMDb-Dataset/509c026e32a6fa78cfc987a0aa39f47cc47fd243/Dataset/'
+          items={
+            'IMDb movies.csv':(47840433,'IMDb%20movies.csv'),
+            'IMDb ratings.csv':(17363252,'IMDb%20ratings.csv')
+          }
+          d=Path('data');d.mkdir(exist_ok=True)
+          for name,(expected,urlname) in items.items():
+              target=d/name
+              print('Retrieving original source file:',name,flush=True)
+              with urlopen(Request(root+urlname,headers={'User-Agent':'Academic-Notebook-Validator/1.0'}),timeout=240) as inp, target.open('wb') as out:
+                  while True:
+                      chunk=inp.read(1<<20)
+                      if not chunk:break
+                      out.write(chunk)
+              assert target.stat().st_size==expected, (name,target.stat().st_size,expected)
+              with target.open('r',encoding='utf-8-sig',newline='') as f:
+                  n=sum(1 for _ in csv.DictReader(f))
+              assert n==85855,(name,n)
+              print(name,':',n,'original CSV rows',flush=True)
+          PY
+      - name: Execute both complete-data assignment methods in clean Jupyter kernel
+        run: |
+          python - <<'PY'
+          import tempfile,nbformat
+          from pathlib import Path
+          from nbclient import NotebookClient
+          p=Path('notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb')
+          nb=nbformat.read(p,as_version=4)
+          nbformat.validate(nb)
+          assert len([c for c in nb.cells if c.cell_type=='code'])==7
+          code='\n'.join(c.source for c in nb.cells if c.cell_type=='code')
+          assert 'head(3000)' not in code and 'ge(1000)' not in code
+          assert 'hashlib' not in code and 'base64' not in code and 'kagglehub' not in code
+          # Execute in a blank folder containing only full original CSVs.
+          with tempfile.TemporaryDirectory() as t:
+              folder=Path(t)
+              (folder/'data').mkdir()
+              import shutil
+              for name in ('IMDb movies.csv','IMDb ratings.csv'):
+                  shutil.copy2(Path('data')/name,folder/'data'/name)
+              done=NotebookClient(nb,timeout=600,kernel_name='python3',allow_errors=False,resources={'metadata':{'path':str(folder)}}).execute()
+          cells=[c for c in done.cells if c.cell_type=='code']
+          assert len(cells)==7 and all(c.execution_count is not None for c in cells)
+          errors=[o for c in cells for o in c.outputs if o.output_type=='error']
+          assert not errors
+          output='\n'.join(str(o) for c in cells for o in c.outputs)
+          assert '85855' in output, 'Full catalogue count missing from outputs'
+          assert 'PASS' in output, 'Both assigned tasks did not complete'
+          for c in done.cells:
+              c.metadata.pop('execution',None)
+              c.metadata.pop('ExecuteTime',None)
+          nbformat.write(done,p)
+          nbformat.validate(nbformat.read(p,as_version=4))
+          print('PASS: 7/7 notebook code cells executed on full original 85,855 IMDb movies and ratings',flush=True)
+          PY
+      - name: Commit full source CSVs and executed notebook
+        run: |
+          git config user.name "Assignment 8 academic maintenance"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "data/IMDb movies.csv" "data/IMDb ratings.csv" notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb
+          git commit -m "Use all original IMDb Extensive records in two assigned recommendation methods"
+          git push origin HEAD:assignment8-full-original-imdb-20261027
+      - name: Create downloadable student ZIP from the exact same checkout files
+        run: |
+          python - <<'PY'
+          import zipfile
+          from pathlib import Path
+          name='Assignment8_Juan_Luna_Santibanez_IMDb_Completo.zip'
+          root='Assignment8_Juan_Luna_Santibanez'
+          paths=[
+              'notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb',
+              'data/IMDb movies.csv','data/IMDb ratings.csv',
+              'README.md','requirements.txt'
+          ]
+          with zipfile.ZipFile(name,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=7) as z:
+              for rel in paths:z.write(rel,root+'/'+rel)
+          with zipfile.ZipFile(name) as z:
+              assert z.testzip() is None
+              assert len(z.namelist())==5
+          print('Complete offline ZIP:',name,'size',Path(name).stat().st_size,flush=True)
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Assignment8_Juan_Luna_Santibanez_IMDb_Completo
+          path: Assignment8_Juan_Luna_Santibanez_IMDb_Completo.zip
+          retention-days: 90
