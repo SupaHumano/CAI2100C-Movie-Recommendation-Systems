@@ -17,7 +17,7 @@
 
 *What changes when I recommend a film from its characteristics instead of rating patterns?*
 
-[**Google Colab**](https://colab.research.google.com/github/SupaHumano/CAI2100C-Movie-Recommendation-Systems/blob/main/notebooks/Assignment_8_Movie_Recommendation_Systems.ipynb) · [**Jupyter Notebook**](notebooks/Assignment_8_Movie_Recommendation_Systems.ipynb) · [**IMDb Dataset**](https://www.kaggle.com/datasets/stefanoleone992/imdb-extensive-dataset) · [**Interactive Demo**](https://supahumano.github.io/CAI2100C-Movie-Recommendation-Systems/)
+[**Google Colab**](https://colab.research.google.com/github/SupaHumano/CAI2100C-Movie-Recommendation-Systems/blob/main/notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb) · [**Jupyter Notebook**](notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb) · [**IMDb Dataset**](https://www.kaggle.com/datasets/stefanoleone992/imdb-extensive-dataset) · [**Interactive Demo**](https://supahumano.github.io/CAI2100C-Movie-Recommendation-Systems/)
 
 </div>
 
@@ -69,7 +69,7 @@ The existing repository preserves figures from an **earlier executed IMDb-only n
 
 I retained the exact [IMDb dataset provenance and recorded SHA-256 values](docs/IMDb_DATA_PROVENANCE.json) and the earlier [classroom verification](docs/CLASSROOM_DATA_VERIFICATION.md) as source-specific historical evidence.
 
-**Current quality gate:** I validated the unified notebook structure and executed all 12 Python cells twice in independent Jupyter kernels using **clearly identified synthetic test fixtures**. Both runs completed without errors. **The current notebook has not yet saved a new execution with the authentic IMDb CSVs and instructor ZIP.** I must perform that final real-data run and save the outputs before submitting it as an executed academic result.
+**Current quality gate:** I validated the renamed, auto-loading notebook with three independent 12/12-cell synthetic-fixture tests: local input files, automatic-loader mock, and IMDb-only with optional MovieLens unavailable. All three completed without Python errors. The auto-loader's real-world network success was **not verified in this offline testing environment**. **The current notebook has not yet saved a new execution with authentic CSVs.** I must run it once online, save the authentic outputs and verify provenance before academic submission.
 
 ## Interactive Movie Lab
 
@@ -81,17 +81,17 @@ I designed an interactive, responsive teaching website where I can select a film
 
 The lab explains both methods and links back to the single canonical notebook, methodology and my oral presentation guide.
 
-## Run the Notebook
+## My automatic dataset loading\n\nI retrieve authentic files only: `IMDb movies.csv` and `IMDb ratings.csv` from [Stefano Leone's IMDb Extensive dataset](https://www.kaggle.com/datasets/stefanoleone992/imdb-extensive-dataset), and when possible, the three modeling files `movies_metadata.csv`, `links_small.csv` and `ratings_small.csv` from [Rounak Banik's public MovieLens/TMDB dataset](https://www.kaggle.com/datasets/rounakbanik/the-movies-dataset). I install/import [`kagglehub`](https://github.com/Kaggle/kagglehub) automatically, and use documented public mirrors if Kaggle access fails. I identify the data source for every CSV and check the archived IMDb mirror SHA-256 fingerprints. My original instructor ZIP remains preferred if available; I do not claim a public copy is identical. Downloading requires working internet access and may require Kaggle authorization.\n\n## Run the Notebook
 
 ### Google Colab
 
-1. [**Open my single notebook in Colab**](https://colab.research.google.com/github/SupaHumano/CAI2100C-Movie-Recommendation-Systems/blob/main/notebooks/Assignment_8_Movie_Recommendation_Systems.ipynb).
-2. Upload **`IMDb movies.csv`** and **`IMDb ratings.csv`** from the [IMDb Extensive source](https://www.kaggle.com/datasets/stefanoleone992/imdb-extensive-dataset), plus my instructor's original **`Assignment 8-machinelearning.zip`**.
-3. Choose **Runtime → Run all** and verify the data summaries, recommendation tables, charts, error metrics and conclusions. Save the executed notebook after checking it contains no tracebacks.
+1. [**Open my single notebook in Colab**](https://colab.research.google.com/github/SupaHumano/CAI2100C-Movie-Recommendation-Systems/blob/main/notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb).
+2. I choose **Runtime → Run all**. My notebook first finds attached original files and otherwise uses the official **Kagglehub** downloader to retrieve the two IMDb CSV files automatically. If Kaggle is blocked, I try a documented pinned IMDb GitHub mirror and check its SHA-256 hashes.
+3. For my optional MovieLens classroom extension, I use the teacher ZIP when present. Otherwise, I automatically request the three required public MovieLens CSVs from Kaggle, then a public mirror if necessary. I do **not** auto-download the large full `ratings.csv`; my model uses `ratings_small.csv`. If MovieLens access is blocked, the two IMDb tasks still complete.\n4. I verify the data summaries, recommendation tables, plots, metrics and provenance, then **save the executed notebook**.
 
 ### Kaggle Notebooks
 
-Open [Kaggle Code](https://www.kaggle.com/code), import [my `.ipynb`](notebooks/Assignment_8_Movie_Recommendation_Systems.ipynb), attach the IMDb Extensive dataset and add the class ZIP to working files. I do not claim that I have published a separate Kaggle notebook URL.
+Open [Kaggle Code](https://www.kaggle.com/code) and import [my single `.ipynb`](notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb). My notebook detects Kaggle's attached files or downloads the named CSVs using `kagglehub`. The original instructor ZIP is optional for the supplementary classroom section. I do not claim that I have published a separate Kaggle notebook URL.
 
 ### Local Jupyter
 
@@ -99,7 +99,7 @@ Open [Kaggle Code](https://www.kaggle.com/code), import [my `.ipynb`](notebooks/
 git clone https://github.com/SupaHumano/CAI2100C-Movie-Recommendation-Systems.git
 cd CAI2100C-Movie-Recommendation-Systems
 python -m pip install -r requirements.txt
-jupyter notebook notebooks/Assignment_8_Movie_Recommendation_Systems.ipynb
+jupyter notebook notebooks/Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb
 ```
 
 Place both IMDb CSVs and the unmodified class ZIP in a directory the notebook searches. I do not redistribute the original external CSV files in this repository.
@@ -111,7 +111,7 @@ CAI2100C-Movie-Recommendation-Systems/
 ├── README.md                   ← Academic project landing page
 ├── index.html                  ← Interactive educational lab
 ├── notebooks/
-│   └── Assignment_8_Movie_Recommendation_Systems.ipynb  ← ONE active submission
+│   └── Assignment_8_Juan_Luna_Santibanez_Movie_Recommendation_Systems.ipynb  ← ONE active submission
 ├── assets/
 │   ├── assignment8-cover.svg   ← Academic project cover
 │   ├── imdb-content-recommendations.png
